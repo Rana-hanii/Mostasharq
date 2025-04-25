@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-chat-ai',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './chat-ai.component.html',
   styleUrl: './chat-ai.component.css'
 })
