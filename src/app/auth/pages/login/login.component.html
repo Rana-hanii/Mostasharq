@@ -1,1 +1,45 @@
-<p>login works!</p>
+<div class="container mx-auto flex items-center justify-center min-h-screen w-full  mt-6">
+    <div class="Register w-1/3 py-10">
+        <form class=" rounded-2xl rounded-r-none bg-gray-100  py-5 px-20  border border-gray-300 border-r-0" a>
+            <div class="header">
+                <h1 class="text-2xl text-black font-bold my-5">Empowering Tomorrow with AI <span class="text-red-700">—
+                        Be Part of the Innovation.</span></h1>
+                <p class="text-zinc-500 font-medium my-5">Discover tools built to think with you, not for you. Whether you're exploring, building, or scaling
+                    with AI, our platform gives you the power to innovate smarter, faster, and more intuitively. Join a
+                    growing community shaping the next era of intelligence."</p>
+            </div>        
+            <div class="mb-5">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Your
+                    email</label>
+                <input type="email" id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-900 focus:border-slatering-slate-900 block w-full p-2.5"
+                    placeholder="name@flowbite.com" required />
+            </div>
+            <div class="mb-5">
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Your
+                    password</label>
+                <input type="password" id="password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-900 focus:border-slatering-slate-900 block w-full p-2.5"
+                    required />
+            </div>
+            <p class="text-xs font-semibold mt-1 mb-4 text-red-600 hover:underline cursor-pointer " routerLink="/forget-pass">Forget Password ?</p>
+            <div class="flex items-start mb-5">
+                <div class="flex items-center h-5">
+                    <input id="remember" type="checkbox" value=""
+                        class="w-4 h-4 border border-gray-300 rounded-sm bg-red-50 focus:ring-3 focus:ring-red-300 "
+                        required /> 
+                </div>
+                <label for="remember" class="ms-2 text-sm font-medium text-gray-900">Remember
+                    me</label>
+            </div>
+            <button type="submit"
+                class="text-white w-full my-5 bg-slate-950 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">Submit</button>
+        </form>
+
+    </div>
+    <div class="pic w-1/3">
+        <img src="images/register.jpg"
+            alt="pic" class="object-contain rounded-2xl shadow-2xl " />
+    </div>
+</div>
+

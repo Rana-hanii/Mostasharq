@@ -6,12 +6,18 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: '',
     component: AuthLayoutComponent,
     children: [
-      {
-        path: 'home',
-        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
-      },
+      
       {
         path: 'login',
         loadComponent: () => import('./auth/pages/login/login.component').then(m => m.LoginComponent)
@@ -30,6 +36,11 @@ export const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
+      {
+        path: '',
+        redirectTo: 'chat-ai',
+        pathMatch: 'full'
+      },
       {
         path: 'chat-ai',
         loadComponent: () => import('./pages/chat-ai/chat-ai.component').then(m => m.ChatAiComponent)
