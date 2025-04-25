@@ -5,7 +5,9 @@
   "projects": {
     "mostasharq": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "skipTests": true
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -97,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ec283b5f-e629-49be-9d75-8b46cb53435f"
   }
 }
