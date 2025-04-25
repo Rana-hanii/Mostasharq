@@ -6,26 +6,12 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 export const routes: Routes = [
   {
     path: '',
-    component: MainLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
-      },
-      {
-        path: 'chat-ai',
-        loadComponent: () => import('./pages/chat-ai/chat-ai.component').then(m => m.ChatAiComponent)
-      },
-      {
-        path: 'payment',
-        loadComponent: () => import('./pages/payment/payment.component').then(m => m.PaymentComponent)
-      }
-    ]
-  },
-  {
-    path: '',
     component: AuthLayoutComponent,
     children: [
+      {
+        path: 'home',
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
+      },
       {
         path: 'login',
         loadComponent: () => import('./auth/pages/login/login.component').then(m => m.LoginComponent)
@@ -40,6 +26,29 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: 'chat-ai',
+        loadComponent: () => import('./pages/chat-ai/chat-ai.component').then(m => m.ChatAiComponent)
+      },
+      {
+        path: 'payment',
+        loadComponent: () => import('./pages/payment/payment.component').then(m => m.PaymentComponent)
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)   
+     },
+     {
+      path: 'profile',
+      loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent)
+     }
+    ]
+  },
+ 
   {
     path: '**',
     component: NotFoundComponent
