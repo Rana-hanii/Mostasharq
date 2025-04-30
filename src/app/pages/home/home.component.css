@@ -37,11 +37,11 @@
     font-size: 18px;
     text-align: center;
     line-height: 200px;
-    background: #000000cc;
+    background: black;
     border: 1px solid;
     border-image: var(--french);
     text-align: center;
-    border-radius: 50px;
+    /* border-radius: 50px; */
   }
   
   .front {
