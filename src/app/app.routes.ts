@@ -1,3 +1,4 @@
+import { ChatWithLawyerComponent } from './pages/chat-with-lawyer/chat-with-lawyer.component';
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
@@ -44,6 +45,10 @@ export const routes: Routes = [
       {
         path: 'chat-ai',
         loadComponent: () => import('./pages/chat-ai/chat-ai.component').then(m => m.ChatAiComponent)
+      },
+      {
+        path: 'chat-with-lawyer',
+        loadComponent: () => import('./pages/chat-with-lawyer/chat-with-lawyer.component').then(m => m.ChatWithLawyerComponent)
       },
       {
         path: 'payment',

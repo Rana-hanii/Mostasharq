@@ -1,6 +1,11 @@
-
-
-import { Component, CUSTOM_ELEMENTS_SCHEMA , ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  HostListener,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 // declare var VANTA: any;
@@ -12,44 +17,28 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
+export class HomeComponent {
+  isHeroVisible = true;
 
+  constructor(private elementRef: ElementRef) {}
 
-export class HomeComponent{
+  ngOnInit(): void {}
 
-  isScrolled = false;
+  ngAfterViewInit(): void {
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const heroSection =
+        this.elementRef.nativeElement.querySelector('#vanta-bg');
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollY = window.scrollY || window.pageYOffset;
-    this.isScrolled = scrollY > 50;
-    console.log('SCROLLED:', this.isScrolled);
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          this.isHeroVisible = entry.isIntersecting;
+        },
+        { threshold: 0.1 }
+      );
+
+      if (heroSection) {
+        observer.observe(heroSection);
+      }
+    }
   }
- 
-
-  // ngAfterViewInit(): void {
-  //   this.vantaEffect = VANTA.WAVES({
-  //     el: this.vantaRef.nativeElement,
-  //     mouseControls: true,
-  //     touchControls: true,
-  //     gyroControls: false,
-  //     minHeight: 200.00,
-  //     minWidth: 200.00,
-  //     scale: 1.00,
-  //     scaleMobile: 1.00,
-  //     color: 0x480808,
-  //     waveSpeed: 0.70
-  //   });
-  // }
-
-  // ngOnDestroy(): void {
-  //   if (this.vantaEffect) {
-  //     this.vantaEffect.destroy();
-  //   }
-  // }
-
-
 }
-
-
-
-
