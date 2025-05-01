@@ -546,8 +546,8 @@ body{
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    padding: 12px;
+    justify-content: center;
+    /* padding: 12px; */
     gap: 12px;
     /* border-radius: 8px; */
     cursor: pointer;
@@ -580,19 +580,19 @@ body{
   }
   
   .heading-2 {
-    font-size: 20px;
+    /* font-size: 20px; */
     text-transform: capitalize;
-    font-weight: 700;
+    /* font-weight: 700; */
   }
   
-  .card-2 p:not(.heading-2) {
+  /* .card-2 p:not(.heading-2) {
     font-size: 14px;
-  }
+  } */
   
-  .card-2 p:last-child {
+  /* .card-2 p:last-child {
     color: oklch(44.4% 0.177 26.899);
     font-weight: 600;
-  }
+  } */
   
   .card-2:hover::after {
     filter: blur(30px);
