@@ -4,8 +4,10 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
         <a class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="images/logo.png" [class]="isHeroVisible ?'h-16' : 'h-10' " alt="Logo">
-            <span [class]="isHeroVisible ? 'self-center text-2xl font-semibold ps-3 py-3 border-l border-white text-white duration-300 ease-in-out' : 'self-center text-2xl font-semibold ps-3 py-3 border-l border-slate-950 text-slate-950 duration-300 ease-in-out' "
-        ><span [class]="isHeroVisible ? 'text-3xl text-red-400' :'text-3xl text-red-700' " >M</span>ostashra<span  [class]="isHeroVisible ? 'text-3xl text-red-400' :'text-3xl text-red-700' " >Q.</span></span>
+            <span
+                [class]="isHeroVisible ? 'self-center text-2xl font-semibold ps-3 py-3 border-l border-white text-white duration-300 ease-in-out' : 'self-center text-2xl font-semibold ps-3 py-3 border-l border-slate-950 text-slate-950 duration-300 ease-in-out' "><span
+                    [class]="isHeroVisible ? 'text-3xl text-red-400' :'text-3xl text-red-700' ">M</span>ostashra<span
+                    [class]="isHeroVisible ? 'text-3xl text-red-400' :'text-3xl text-red-700' ">Q.</span></span>
         </a>
         <div routerLink="/sign-up" class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse sm:text-center">
             <button type="button"
@@ -60,7 +62,7 @@
                             <div class="face front ">AI Egyptian Law</div>
                             <div class="face back">Simulating real cases </div>
                             <div class="face right">Explore the Future</div>
-                            <div class="face left">Instant Legal Insights :)</div>
+                            <div class="face left">Instant Legal Insights</div>
                             <div class="face top">Smart Legal Assistant</div>
                             <div class="face bottom">Built for Egypt</div>
                         </div>
@@ -121,7 +123,6 @@
                                             </svg>
                                         </button>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -598,4 +599,3 @@
 
     </div>
 </footer>
-
