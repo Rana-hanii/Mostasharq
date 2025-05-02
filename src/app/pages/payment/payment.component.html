@@ -1,1 +1,415 @@
-<p>payment works!</p>
+<button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar"
+    aria-controls="sidebar-multi-level-sidebar" type="button"
+    class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+    <span class="sr-only">Open sidebar</span>
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd"
+            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+        </path>
+    </svg>
+</button>
+<!--! navigation -->
+<aside id="sidebar-multi-level-sidebar"
+    class="fixed bottom-0 top-0 left-0 z-50  mx-2 my-2 transition-transform -translate-x-full sm:translate-x-0 "
+    aria-label="Sidebar">
+    <div
+        class="h-full  py-4 overflow-y-auto bg-slate-950 rounded-3xl flex flex-col items-center justify-around px-5 shadow-2xl/20 border border-white">
+        <a
+            class="flex items-center  text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <img src="images/logo-dark.png" alt="logo" class="h-10 ">
+        </a>
+        <ul class="space-y-2 font-medium ">
+            <li class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                <a routerLink="/chat-ai" routerLinkActive="bg-gray-300 text-red-600"
+                    class="flex items-center p-2  rounded-lg group">
+                    <svg class="shrink-0 w-7 h-7  " xmlns="http://www.w3.org/2000/svg"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" />
+                    </svg>
+                </a>
+            </li>
+            <li routerLink="/chat-with-lawyer" routerLinkActive="bg-gray-300 text-red-600"
+                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                <a class="flex items-center p-2  rounded-lg  group">
+                    <svg class="shrink-0 w-6 h-6   " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
+                    </svg>
+                </a>
+            </li>
+            <li routerLink="/payment" routerLinkActive="bg-gray-300 !text-red-600"
+                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                <a class="flex items-center p-2 rounded-lg group">
+                    <svg class="shrink-0 w-7 h-7  " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+
+        <button routerLink="/profile" routerLinkActive="bg-red-700"
+            class="flex justify-center items-center w-10 h-10 mt-28 mb-4 rounded-full shadow-md bg-gradient-to-r from-[#ff0000] to-[white] hover:from-[red] hover:to-[#e23737] hover:cursor-pointer hover:scale-110 duration-300">
+            <svg viewBox="0 0 15 15" class="w-7 fill-gray-700">
+                <path
+                    d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
+                </path>
+            </svg>
+        </button>
+        <button
+            class="group flex items-center justify-start w-10 h-10 bg-red-600 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
+            <div
+                class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
+                <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
+                    <path
+                        d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                    </path>
+                </svg>
+            </div>
+            <div
+                class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                Logout
+            </div>
+        </button>
+    </div>
+</aside>
+<!--! navigation -->
+
+<section id="pricing">
+    <div class="relative isolate pt-24 bg-slate-950">
+        <div class="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl" aria-hidden="true">
+            <div class="mx-auto aspect-1155/678 w-[72.1875rem] bg-linear-to-tr from-[#ff0000] to-[#e45151] opacity-30"
+                style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+            </div>
+        </div>
+        <div class="mx-auto max-w-4xl text-center">
+            <h2 class="text-base/7 font-semibold text-red-700">Pricing</h2>
+            <p class="mt-2 text-5xl font-semibold tracking-tight text-balance text-white sm:text-6xl">Choose
+                the right
+                plan for you</p>
+        </div>
+        <p class="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty text-zinc-400 sm:text-xl/8">
+            Choose an
+            affordable plan that's packed with the best features for engaging your audience, creating customer
+            loyalty, and
+            driving sales.</p>
+        <div class="mx-auto mt-16 grid  grid-cols-1 items-center  sm:mt-20 sm:gap-y-0 lg:max-w-6xl lg:grid-cols-3">
+            <div
+                class="rounded-3xl rounded-t-3xl bg-white/80 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-tr-none lg:rounded-bl-3xl mx-3 md:mx-0 border border-red-800 my-10">
+                <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-800">Hobby </h3>
+                <p class="mt-4 flex items-baseline gap-x-2">
+                    <span class="text-5xl font-semibold tracking-tight text-gray-900"> EGP 199</span>
+                    <span class="text-base text-gray-500 font-semibold">/month</span>
+                </p>
+                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Perfect for users who want to use the chatbot
+                    only, without direct interaction with lawyers</p>
+                <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10 font-semibold">
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Full access to the AI legal chatbot
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Simple and user-friendly interface
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Get answers to general legal questions instantly
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        24-hour support response time
+                    </li>
+                </ul>
+                <a href="#" aria-describedby="tier-hobby"
+                    class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-800 ring-1 ring-red-800 ring-inset hover:ring-red-900 hover:bg-red-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10">Get
+                    started today</a>
+            </div>
+            <div
+                class="relative rounded-3xl bg-slate-950 px-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10 border border-red-800 py-12">
+                <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-500">Premium </h3>
+                <p class="mt-4 flex items-baseline gap-x-2">
+                    <span class="text-5xl font-semibold tracking-tight text-white">EGP 399</span>
+                    <span class="text-base text-gray-400 font-semibold">/month</span>
+                </p>
+                <p class="mt-6 text-base/7 text-gray-300 font-semibold">Ideal for users who need occasional access to
+                    real lawyers along with the chatbot service
+                </p>
+                <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-300 sm:mt-10 font-semibold ">
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        All Hobby plan features included
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        10 lawyer chat sessions per month
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Ability to switch between available lawyers
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Monthly or yearly subscription options
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Quick responses from licensed lawyers
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Custom integrations
+                    </li>
+                </ul>
+                <a href="#" aria-describedby="tier-enterprise"
+                    class="mt-8 block rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-white hover:text-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10">Get
+                    started today</a>
+            </div>
+            <div
+                class="rounded-3xl rounded-t-3xl bg-white/80 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-tr-3xl lg:rounded-tl-none lg:rounded-br-3xl mx-3 md:mx-0 border border-red-800">
+                <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-800">Enterprise</h3>
+                <p class="mt-4 flex items-baseline gap-x-2">
+                    <span class="text-5xl font-semibold tracking-tight text-gray-900">EGP 699</span>
+                    <span class="text-base text-gray-500 font-semibold">/month</span>
+                </p>
+                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Designed for companies or individuals who
+                    require continuous legal support and unlimited access</p>
+                <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10 font-semibold">
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Unlimited lawyer chat sessions
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Assigned personal legal advisor
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Advanced legal consulting and follow-up
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Monthly legal reports and summaries
+                    </li>
+                </ul>
+                <a href="#" aria-describedby="tier-hobby"
+                    class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-800 ring-1 ring-red-800 ring-inset hover:ring-red-900 hover:bg-red-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10">Get
+                    started today</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+<div class="relative isolate overflow-hidden bg-slate-950 py-16 sm:py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+            <div class="max-w-xl lg:max-w-lg">
+                <h2 class="text-4xl font-semibold tracking-tight text-white mb-10">Flexible Legal Support for Every Need
+                </h2>
+                <p class="mt-4 text-lg text-gray-300">Get instant answers from AI, or connect with certified lawyers for
+                    professional legal advice tailored to your needs..</p>
+                <div class="mt-6  gap-x-4 mx-auto">
+                </div>
+            </div>
+            <dl class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
+                <div class="flex flex-col items-start">
+                    <div class="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                        <svg class="size-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                        </svg>
+                    </div>
+                    <dt class="mt-4 text-base font-semibold text-white">Smart Legal Assistant
+                    </dt>
+                    <dd class="mt-2 text-base/7 text-gray-400">Instant access to our AI-powered legal chatbot for quick
+                        answers to general legal questions — available 24/7 with high accuracy.</dd>
+                </div>
+                <div class="flex flex-col items-start">
+                    <div class="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+                        <svg class="size-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002" />
+                        </svg>
+                    </div>
+                    <dt class="mt-4 text-base font-semibold text-white">Talk to Real Lawyers</dt>
+                    <dd class="mt-2 text-base/7 text-gray-400">Need personalized advice? Get direct support from
+                        certified Egyptian lawyers with flexible chat sessions and fast response times..</dd>
+                </div>
+            </dl>
+        </div>
+        <div class="mx-auto my-16">
+            <form class=" mx-auto">
+                <div class="grid grid-cols-2">
+                    <div class="mx-8">
+                        <h3 class="mb-5 text-lg font-medium text-white text-center">Enter Your Data</h3>
+                        <div class="relative z-0 w-full mb-10 group">
+                            <input type="email" name="floating_email" id="floating_email"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_email"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                                address</label>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="relative z-0 w-full my-6 group">
+                                <input type="text" name="floating_first_name" id="floating_first_name"
+                                    class="block py-2.5 p-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required />
+                                <label for="floating_first_name"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
+                                    name</label>
+                            </div>
+                            <div class="relative z-0 w-full my-6 group">
+                                <input type="text" name="floating_last_name" id="floating_last_name"
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required />
+                                <label for="floating_last_name"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
+                                    name</label>
+                            </div>
+                        </div>
+                        <div class="relative z-0 w-full mt-10 group">
+                            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone"
+                                id="floating_phone"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_phone"
+                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
+                                number (123-456-7890)</label>
+                        </div>
+                    </div>
+                    <div class="mx-4">
+                        <h3 class="mb-10 text-lg font-medium text-white text-center">Choose the Plan That Fits Your
+                            Legal Needs</h3>
+                        <ul class="grid w-full gap-6 md:grid-cols-3">
+                            <li>
+                                <input type="radio" id="hosting-small" name="hosting" value="hosting-small"
+                                    class="hidden peer" required />
+                                <label for="hosting-small"
+                                    class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border  border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
+                                    <div class="block">
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 199</div>
+                                        <div class="w-full text-center">Perfect for users who want to use the chatbot
+                                            only, without direct interaction with lawyers</div>
+                                    </div>
+                                </label>
+                            </li>
+                            <li>
+                                <input type="radio" id="hosting-big" name="hosting" value="hosting-big"
+                                    class="hidden peer" required />
+                                <label for="hosting-big"
+                                    class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
+                                    <div class="block">
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 699</div>
+                                        <div class="w-full  text-center">For companies or individuals who
+                                            require continuous legal support and unlimited access</div>
+                                    </div>
+                                </label>
+                            </li>
+                            <li>
+                                <input type="radio" id="hosting-big-2" name="hosting" value="hosting-big-2"
+                                    class="hidden peer" required />
+                                <label for="hosting-big-2"
+                                    class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
+                                    <div class="block">
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 399</div>
+                                        <div class="w-full text-center">deal for users who need occasional access to
+                                            real lawyers along with the chatbot service</div>
+                                    </div>
+                                </label>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="btn !text-center !mx-auto my-6">
+                    <button type="submit"
+                        class=" !w-[50%] text-white bg-red-800 hover:bg-white hover:text-red-800   font-bold rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center">Checkout</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="absolute top-0 left-1/2 -z-10 -translate-x-1/2 blur-3xl xl:-top-6" aria-hidden="true">
+        <div class="aspect-1155/678 w-[72.1875rem] bg-linear-to-tr from-[#ff0000] to-[#e45151] opacity-30"
+            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+        </div>
+    </div>
+
+</div>
