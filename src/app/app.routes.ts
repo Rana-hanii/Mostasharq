@@ -1,3 +1,6 @@
+import { ContactUsComponent } from './pages/contact-us/contact-us.component';
+import { OrderComponent } from './pages/order/order.component';
+import { ChatLaywersWithUsersComponent } from './pages/chat-laywers-with-users/chat-laywers-with-users.component';
 import { ChatWithLawyerComponent } from './pages/chat-with-lawyer/chat-with-lawyer.component';
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
@@ -51,6 +54,14 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/chat-with-lawyer/chat-with-lawyer.component').then(m => m.ChatWithLawyerComponent)
       },
       {
+        path: 'UserChats',
+        loadComponent: () => import('./pages/chat-laywers-with-users/chat-laywers-with-users.component').then(m => m.ChatLaywersWithUsersComponent)
+      },
+      {
+        path: 'order',
+        loadComponent: () => import('./pages/order/order.component').then(m => m.OrderComponent)
+      },
+      {
         path: 'payment',
         loadComponent: () => import('./pages/payment/payment.component').then(m => m.PaymentComponent)
       },
@@ -61,6 +72,10 @@ export const routes: Routes = [
      {
       path: 'profile',
       loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent)
+     },
+     {
+      path: 'ContactUs',
+      loadComponent: () => import('./pages/contact-us/contact-us.component').then(m => m.ContactUsComponent)
      }
     ]
   },
