@@ -1,17 +1,19 @@
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
-  ViewChild,
-  AfterViewInit,
-  HostListener,
-  OnDestroy,
+  Inject,
+  inject,
   NgZone,
+  OnDestroy,
   PLATFORM_ID,
-  Inject
+  ViewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
+
 
 declare global {
   interface Window {
@@ -23,12 +25,20 @@ declare global {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
+
+   readonly _FixflowbiteService = inject(FixflowbiteService)
+   visible: boolean = false;
+
+   showDialog() {
+       this.visible = true;
+   }
+
   isHeroVisible = true;
   vantaEffect: any = null;
   private scriptsLoaded = {
@@ -41,6 +51,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly isBrowser: boolean;
 
   @ViewChild('vantaContainer', { static: false }) vantaContainer?: ElementRef;
+
+  isModalOpen = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -273,5 +285,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         setTimeout(() => this.initVanta(), 500);
       }
     }
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 }
