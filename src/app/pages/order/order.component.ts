@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NavDarkComponent } from "../../shared/components/nav-dark/nav-dark.component";
 
 @Component({
   selector: 'app-order',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NavDarkComponent],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
