@@ -26,25 +26,25 @@
                     <label class="block text-left text-gray-300 text-sm font-medium mb-2">Account type</label>
                     <div class="flex gap-6">
                         <label class="flex items-center cursor-pointer">
-                            <input type="radio" name="accountType" value="consumer" formControlName="accountType"
+                            <input type="radio" name="role" value="client" formControlName="role"
                                 class="form-radio text-red-600 focus:ring-red-500 h-4 w-4 border-gray-300 "
                                 required>
                             <span class="ml-2 text-gray-200">Consumer</span>
                         </label>
                         <label class="flex items-center cursor-pointer">
-                            <input type="radio" name="accountType" value="company" formControlName="accountType"
+                            <input type="radio" name="role" value="company" formControlName="role"
                                 class="form-radio text-red-600 focus:ring-red-500 h-4 w-4 border-gray-300 ">
                             <span class="ml-2 text-gray-200">Company</span>
                         </label>
                         <label class="flex items-center cursor-pointer">
-                            <input type="radio" name="accountType" value="lawyer" formControlName="accountType"
+                            <input type="radio" name="role" value="lawyer" formControlName="role"
                                 class="form-radio text-red-600 focus:ring-red-500 h-4 w-4 border-gray-300 ">
                             <span class="ml-2 text-gray-200">Lawyer</span>
                         </label>
                     </div>
-                    @if (f['accountType'].touched && f['accountType'].errors) {
+                    @if (f['role'].touched && f['role'].errors) {
                         <div class="text-red-500 text-sm text-sem font-semibold  mt-1">
-                            @if (f['accountType'].errors['required']) {
+                            @if (f['role'].errors['required']) {
                                 <span>Please select an account type</span>
                             }
                         </div>
@@ -54,18 +54,18 @@
                 <div class="grid grid-cols-2 gap-4">
                     <!--! first name -->
                     <div class="relative z-0 w-full group form-field">
-                        <input type="text" id="firstName" name="firstName" formControlName="firstName"
+                        <input type="text" id="first_name" name="first_name" formControlName="first_name"
                             class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none  focus:outline-none focus:ring-0 focus:border-white peer input-focus font-semibold"
                             placeholder=" " required />
-                        <label for="firstName"
+                        <label for="first_name"
                             class="peer-focus:font-medium absolute text-sm text-gray-500 font-semibold duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white border-white  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
                             name</label>
-                        @if (f['firstName'].touched && f['firstName'].errors) {
+                        @if (f['first_name'].touched && f['first_name'].errors) {
                             <div class="text-red-500 text-sm text-sem font-semibold  mt-1">
-                                @if (f['firstName'].errors['required']) {
+                                @if (f['first_name'].errors['required']) {
                                     <span>First name is required</span>
                                 }
-                                @if (f['firstName'].errors['minlength']) {
+                                @if (f['first_name'].errors['minlength']) {
                                     <span>First name must be at least 2 characters</span>
                                 }
                             </div>
@@ -74,18 +74,18 @@
                     <!--! first name -->
                     <!--! last name -->
                     <div class="relative z-0 w-full group form-field">
-                        <input type="text" id="lastName" name="lastName" formControlName="lastName"
+                        <input type="text" id="last_name" name="last_name" formControlName="last_name"
                             class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none  focus:outline-none focus:ring-0 focus:border-white peer input-focus font-semibold"
                             placeholder=" " required />
-                        <label for="lastName"
+                        <label for="last_name"
                             class="peer-focus:font-medium absolute text-sm text-gray-500 font-semibold duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white border-white  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
                             name</label>
-                        @if (f['lastName'].touched && f['lastName'].errors) {
+                        @if (f['last_name'].touched && f['last_name'].errors) {
                             <div class="text-red-500 text-sm text-sem font-semibold  mt-1">
-                                @if (f['lastName'].errors['required']) {
+                                @if (f['last_name'].errors['required']) {
                                     <span>Last name is required</span>
                                 }
-                                @if (f['lastName'].errors['minlength']) {
+                                @if (f['last_name'].errors['minlength']) {
                                     <span>Last name must be at least 2 characters</span>
                                 }
                             </div>
@@ -113,6 +113,26 @@
                     }
                 </div>
                 <!--! email -->
+                <!--! phone number -->
+                <div class="relative z-0 w-full group form-field">
+                    <input type="tel" id="phone_number" name="phone_number" formControlName="phone_number"
+                        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none  focus:outline-none focus:ring-0 focus:border-white peer input-focus font-semibold"
+                        placeholder=" " required />
+                    <label for="phone_number"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 font-semibold duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white border-white  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
+                        number</label>
+                    @if (f['phone_number'].touched && f['phone_number'].errors) {
+                        <div class="text-red-500 text-sm text-sem font-semibold  mt-1">
+                            @if (f['phone_number'].errors['required']) {
+                                <span>Phone number is required</span>
+                            }
+                            @if (f['phone_number'].errors['pattern'] || f['phone_number'].errors['minlength'] || f['phone_number'].errors['maxlength']) {
+                                <span>Please enter a valid 11-digit phone number</span>
+                            }
+                        </div>
+                    }
+                </div>
+                <!--! phone number -->
                 <!--! password -->
                 <div class="relative z-0 w-full group form-field">
                     <input type="password" id="password" name="password" formControlName="password"

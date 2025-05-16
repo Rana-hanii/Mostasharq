@@ -24,18 +24,17 @@
             <form class="space-y-6 w-full" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <!--! email -->
                 <div class="relative z-0 w-full group form-field">
-                    <input type="email" id="email" formControlName="email"
+                    <input type="email" id="username" formControlName="username"
                         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none  focus:outline-none focus:ring-0 focus:border-white peer input-focus"
                         placeholder=" " required />
-                    <label for="email"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 font-semibold  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
-                        address</label>
-                    @if (f['email'].touched && f['email'].errors) {
+                    <label for="username"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 font-semibold  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username or Email</label>
+                    @if (f['username'].touched && f['username'].errors) {
                     <div class="text-red-500 text-sm text-sem font-semibold mt-1">
-                        @if (f['email'].errors['required']) {
-                        <span >Email is required</span>
+                        @if (f['username'].errors['required']) {
+                        <span>Username is required</span>
                         }
-                        @if (f['email'].errors['email']) {
+                        @if (f['username'].errors['email']) {
                         <span>Please enter a valid email</span>
                         }
                     </div>

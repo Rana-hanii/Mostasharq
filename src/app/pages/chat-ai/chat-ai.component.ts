@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
+import { NavSidebarComponent } from '../../shared/components/nav-sidebar/nav-sidebar.component';
 
 @Component({
   selector: 'app-chat-ai',
-  imports: [RouterLink,RouterLinkActive],
+  imports: [NavSidebarComponent],
   templateUrl: './chat-ai.component.html',
   styleUrl: './chat-ai.component.css'
 })

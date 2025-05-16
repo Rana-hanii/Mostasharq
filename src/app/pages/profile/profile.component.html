@@ -96,148 +96,276 @@
         </button>
     </div>
 </aside>
+<!--! navigation -->
 
-<!-- Main Content -->
-<section id="profile-edit" class="relative isolate  bg-slate-950 min-h-screen py-16">
+
+<!--! Main Content -->
+<section id="profile-edit" class="relative isolate bg-slate-950 min-h-screen py-16">
     <div class="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl" aria-hidden="true">
         <div class="mx-auto aspect-1155/678 w-[72.1875rem] bg-linear-to-tr from-[#ff0000] to-[#e45151] opacity-30"
             style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
         </div>
     </div>
+ 
+    <!-- Header -->
     <div class="mx-auto max-w-4xl text-center">
         <h2 class="text-base/7 font-semibold text-red-700">Profile Settings</h2>
-        <p class="mt-2 text-5xl font-semibold tracking-tight text-balance text-white sm:text-6xl">Manage Your Account
-        </p>
+        <p class="mt-2 text-5xl font-semibold tracking-tight text-balance text-white sm:text-6xl">Manage Your Account</p>
     </div>
     <p class="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty text-zinc-400 sm:text-xl/8">
         Update your personal information, security settings, and account preferences.
     </p>
-    <!-- Profile Edit Form -->
-    <div class="mx-auto mt-16 max-w-7xl px-6 lg:px-8 ">
-        <div class="flex items-center justify-center w-[50%] mx-auto">
-            <label for="profile_image"
-                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-red-800/20 mb-10">
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg class="w-8 h-8 mb-4 text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-400"><span class="font-semibold">Click to upload</span> or
-                        drag and drop</p>
-                    <p class="text-xs text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                </div>
-                <input id="profile_image" type="file" class="hidden" />
-            </label>
+
+    <!-- Main Content Container -->
+    <div class="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
+        <!-- Profile Photo & User Data Section -->
+        <div class="mb-12 flex flex-col md:flex-row items-center justify-center gap-8">
+            <!--! Profile Photo Upload -->
+            <div class="w-full md:w-2/3 flex flex-col items-center ">
+                <label for="profile_image"
+                    class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-red-800/20">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                    </div>
+                    <input id="profile_image" type="file" class="hidden" />
+                </label>
+            </div>
+            <!--! User Data Display -->
+            <div class="w-full md:w-2/3 bg-transparent rounded-lg  p-6 flex flex-col gap-2 ms-auto">
+                <h3 class="text-lg font-medium text-white mb-4">User Information</h3>
+                <ng-container *ngIf="userProfile; else loadingOrError">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-gray-400">First Name</p>
+                            <p class="text-white font-medium">{{userProfile.first_name}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Last Name</p>
+                            <p class="text-white font-medium">{{userProfile.last_name}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Email</p>
+                            <p class="text-white font-medium">{{userProfile.email}}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Phone Number</p>
+                                <p class="text-white font-medium">{{userProfile.phone_number}}</p>
+                        </div>
+                        <div *ngIf="userProfile.user_id">
+                            <p class="text-gray-400">User ID</p>
+                            <p class="text-white font-medium">{{userProfile.user_id}}</p>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #loadingOrError>
+                    <div class="text-gray-400">Loading user data or failed to load.</div>
+                </ng-template>
+            </div>
         </div>
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            
-            <!-- Profile Information -->
-            <div class="space-y-6">
-                <h3 class="text-lg font-medium text-white text-center">Profile Information</h3>
-                
-                <div class="relative z-0 w-full group">
-                    <input type="text" name="first_name" id="first_name"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="first_name"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
-                        Name</label>
-                </div>
 
-                <div class="relative z-0 w-full group">
-                    <input type="text" name="last_name" id="last_name"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="last_name"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
-                        Name</label>
-                </div>
+        <!-- Profile Information Form -->
+        <form [formGroup]="profileForm"  class="space-y-8">
+            <div class="bg-slate-900 p-6 rounded-lg border border-gray-700">
+                <h3 class="text-lg font-medium text-white mb-6">Personal Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="relative z-0 w-full group">
+                        <input type="text" formControlName="first_name" id="first_name"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="first_name"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
+                            Name</label>
+                        @if (profileForm.get('first_name')?.touched && profileForm.get('first_name')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (profileForm.get('first_name')?.errors?.['required']) {
+                                    First name is required
+                                }
+                                @if (profileForm.get('first_name')?.errors?.['minlength']) {
+                                    First name must be at least 2 characters
+                                }
+                            </p>
+                        }
+                    </div>
 
-                <div class="relative z-0 w-full group">
-                    <input type="email" name="email" id="email"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="email"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
-                        Address</label>
-                </div>
+                    <div class="relative z-0 w-full group">
+                        <input type="text" formControlName="last_name" id="last_name"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="last_name"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
+                            Name</label>
+                        @if (profileForm.get('last_name')?.touched && profileForm.get('last_name')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (profileForm.get('last_name')?.errors?.['required']) {
+                                    Last name is required
+                                }
+                                @if (profileForm.get('last_name')?.errors?.['minlength']) {
+                                    Last name must be at least 2 characters
+                                }
+                            </p>
+                        }
+                    </div>
 
-                <div class="relative z-0 w-full group">
-                    <input type="tel" name="phone" id="phone"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="phone"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
-                        Number</label>
-                </div>
+                    <div class="relative z-0 w-full group">
+                        <input type="email" formControlName="email" id="email"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="email"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                            Address</label>
+                        @if (profileForm.get('email')?.touched && profileForm.get('email')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (profileForm.get('email')?.errors?.['required']) {
+                                    Email is required
+                                }
+                                @if (profileForm.get('email')?.errors?.['email']) {
+                                    Please enter a valid email address
+                                }
+                            </p>
+                        }
+                    </div>
 
-              
+                    <div class="relative z-0 w-full group">
+                        <input type="tel" formControlName="phone" id="phone"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="phone"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
+                            Number</label>
+                        @if (profileForm.get('phone')?.touched && profileForm.get('phone')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (profileForm.get('phone')?.errors?.['required']) {
+                                    Phone number is required
+                                }
+                                @if (profileForm.get('phone')?.errors?.['pattern']) {
+                                    Please enter a valid 11-digit phone number
+                                }
+                            </p>
+                        }
+                    </div>
+                </div>
+                <!-- Update Info Button -->
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" [disabled]="profileForm.invalid || isLoading" (click)="onUpdateUser()"
+                        class="text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        @if (isLoading) {
+                        <span class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent align-middle"></span>
+                        <span class="ml-2">Updating...</span>
+                        }
+                        @if (!isLoading) {
+                        <span>Update Information</span>
+                        }
+                    </button>
+                </div>
             </div>
 
-            <!--& Security Settings -->
-            <div class="space-y-6">
-                <h3 class="text-lg font-medium text-white text-center">Security Settings</h3>
-                <div class="relative z-0 w-full group">
-                    <input type="password" name="current_password" id="current_password"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="current_password"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current
-                        Password</label>
-                </div>
+            <!-- Password Change Form -->
+            <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange()" class="bg-slate-900 p-6 rounded-lg border border-gray-700">
+                <h3 class="text-lg font-medium text-white mb-6">Change Password</h3>
+                <div class="space-y-6">
+                    <div class="relative z-0 w-full group">
+                        <input type="password" formControlName="old_password" id="old_password"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="old_password"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current
+                            Password</label>
+                        @if (passwordForm.get('old_password')?.touched && passwordForm.get('old_password')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (passwordForm.get('old_password')?.errors?.['required']) {
+                                    Current password is required
+                                }
+                            </p>
+                        }
+                    </div>
 
-                <div class="relative z-0 w-full group">
-                    <input type="password" name="new_password" id="new_password"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="new_password"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">New
-                        Password</label>
-                </div>
+                    <div class="relative z-0 w-full group">
+                        <input type="password" formControlName="new_password" id="new_password"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="new_password"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">New
+                            Password</label>
+                        @if (passwordForm.get('new_password')?.touched && passwordForm.get('new_password')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (passwordForm.get('new_password')?.errors?.['required']) {
+                                    New password is required
+                                }
+                                @if (passwordForm.get('new_password')?.errors?.['minlength']) {
+                                    Password must be at least 8 characters
+                                }
+                            </p>
+                        }
+                    </div>
 
-                <div class="relative z-0 w-full group">
-                    <input type="password" name="confirm_password" id="confirm_password"
-                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                        placeholder=" " required />
-                    <label for="confirm_password"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
-                        New Password</label>
+                    <div class="relative z-0 w-full group">
+                        <input type="password" formControlName="confirm_password" id="confirm_password"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " required />
+                        <label for="confirm_password"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
+                            New Password</label>
+                        @if (passwordForm.get('confirm_password')?.touched && passwordForm.get('confirm_password')?.errors) {
+                            <p class="mt-2 text-sm text-red-600">
+                                @if (passwordForm.get('confirm_password')?.errors?.['required']) {
+                                    Please confirm your new password
+                                }
+                                @if (passwordForm.get('confirm_password')?.errors?.['passwordMismatch']) {
+                                    Passwords do not match
+                                }
+                            </p>
+                        }
+                    </div>
                 </div>
-
-                <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                    <input type="checkbox" id="two_factor" name="two_factor" value="two_factor"
-                        class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                    <label for="two_factor" class="ml-2 text-sm font-medium text-gray-300">
-                        Enable Two-Factor Authentication
-                    </label>
+                <!-- Change Password Button -->
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" [disabled]="passwordForm.invalid || isPasswordLoading"
+                        class="text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        @if (isPasswordLoading) {
+                        <span class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent align-middle"></span>
+                        <span class="ml-2">Updating Password...</span>
+                        }
+                        @if (!isPasswordLoading) {
+                        <span>Change Password</span>
+                        }
+                    </button>
                 </div>
+            </form>
 
-                <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                    <input type="checkbox" id="logout_other" name="logout_other" value="logout_other"
-                        class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                    <label for="logout_other" class="ml-2 text-sm font-medium text-gray-300">
-                        Logout from Other Sessions
-                    </label>
+            <!-- Security Settings -->
+            <div class="bg-slate-900 p-6 rounded-lg border border-gray-700">
+                <h3 class="text-lg font-medium text-white mb-6">Security Settings</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
+                        <input type="checkbox" id="two_factor" name="two_factor" value="two_factor"
+                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
+                        <label for="two_factor" class="ml-2 text-sm font-medium text-gray-300">
+                            Enable Two-Factor Authentication
+                        </label>
+                    </div>
+
+                    <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
+                        <input type="checkbox" id="logout_other" name="logout_other" value="logout_other"
+                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
+                        <label for="logout_other" class="ml-2 text-sm font-medium text-gray-300">
+                            Logout from Other Sessions
+                        </label>
+                    </div>
                 </div>
             </div>
-            <!--& Security Settings -->
-        </div>
-        <!--& btns -->
-        <div class="mt-8 text-center">
-            <button type="submit"
-                class="text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300">
-                Save Changes
-            </button>
-        </div>
 
-        <div class="my-8 text-center">
-            <button type="button"
-                class="text-white bg-red-700 hover:bg-red-800 font-bold rounded-lg text-sm px-10 py-2.5 text-center transition-colors duration-300">
-                Delete Account
-            </button>
-        </div>
-        <!--& btns -->
+            <!-- Delete Account Button -->
+            <div class="flex justify-center">
+                <button type="button" (click)="onDeleteAccount()"
+                    class="text-white bg-red-700 hover:bg-red-800 font-bold rounded-lg text-sm px-10 py-2.5 text-center transition-colors duration-300">
+                    Delete Account
+                </button>
+            </div>
+        </form>
     </div>
 </section>

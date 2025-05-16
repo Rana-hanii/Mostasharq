@@ -1,8 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ILoginSucc } from '../../interfaces/ilogin-succ';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,32 +26,61 @@ import { Router, RouterLink } from '@angular/router';
   ]
 })
 export class LoginComponent {
+  //! variables
   loginForm!: FormGroup;
   isLoading = false;
+  successMessage = '';
+  errorMessage = '';
 
+  //! Injections
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
   get f() { return this.loginForm.controls; }
 
-  onSubmit() {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
+  //! submit
+  onSubmit(): void {
+    this.handleSubmit();
+
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      const formData = new FormData();
+      formData.append('username', this.loginForm.value.username);
+      formData.append('password', this.loginForm.value.password);
+
+      this.authService.sendLogin(formData).subscribe({
+        next: (res: ILoginSucc) => {
+          console.log(res);
+          this.successMessage = 'Login successful';
+          this.loginForm.reset();
+          this.isLoading = false;
+          localStorage.setItem('token', res.access_token);
+          setTimeout(() => {
+            this.router.navigate(['/chat-ai']);
+          }, 1500);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.isLoading = false;
+          console.log(err.error);
+          console.log(err.error.message);
+          this.errorMessage = err.error.message;
+        },
+      });
     }
-    this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      console.log('Login data:', this.loginForm.value);
-      this.router.navigate(['/chat-ai']);
-    }, 1000);
+  }
+
+  handleSubmit() {
+    this.loginForm.markAllAsTouched();
+    this.successMessage = '';
+    this.errorMessage = '';
   }
 
   navigateToSignUp() {
