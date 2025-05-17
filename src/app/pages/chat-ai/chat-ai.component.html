@@ -27,7 +27,10 @@
                 {{ errorMessage }}
             </div>
 
-            <div *ngIf="!isLoading && !errorMessage" class="chats bg-white shadow-2xl/20 rounded-2xl px-4 mt-4 mx-auto">
+            <div 
+                *ngIf="!isLoading && !errorMessage"
+                class="chats bg-white shadow-2xl/20 rounded-2xl px-4 mt-4 mx-auto"
+                style="max-height: 500px; overflow-y: auto;">
                 <div *ngFor="let chat of chatHistory"
                      (click)="getChatDetails(chat.chat_id)"
                      class="border-b border-gray-200 py-4 font-medium cursor-pointer hover:bg-gray-50">
@@ -41,14 +44,25 @@
 <!--! chat -->
 <div class="p-4 sm:ml-80">
     <div class="title mx-40 mt-10 mb-10 flex items-center justify-between">
-        <h1 class="text-3xl font-semibold mx-3">{{ currentChatId ? 'Chat #' + currentChatId : 'Select a chat' }}</h1>
-        <div class="icons">
+        <h1 class="text-3xl font-semibold mx-3">
+            {{ currentChatId ? 'Chat #' + currentChatId : 'Select a chat' }}
+        </h1>
+        <div class="icons flex items-center">
+            <button 
+                *ngIf="currentChatId"
+                (click)="endCurrentChat()"
+                [disabled]="isLoading"
+                class="bg-red-600 text-white rounded-full px-4 py-2 mx-2 hover:bg-red-800 transition disabled:opacity-50"
+                title="End Chat">
+                End Chat
+            </button>
             <span class="hover:rounded-full hover:shadow-2xl/50 hover:bg-white py-4 px-1 transition-all duration-300">
                 <i class="fa-solid fa-pen text-xl text-slate-950 px-4"></i>
             </span>
-            <span class="hover:rounded-full hover:shadow-2xl/50 hover:bg-white py-4 px-1 transition-all duration-300 ms-2">
+
+            <!-- <span class="hover:rounded-full hover:shadow-2xl/50 hover:bg-white py-4 px-1 transition-all duration-300 ms-2">
                 <i class="fa-solid fa-gear text-xl text-slate-950 px-4"></i>
-            </span>
+            </span> -->
         </div>
     </div>
 

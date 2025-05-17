@@ -108,4 +108,24 @@ export class ChatAiComponent implements OnInit {
       }
     });
   }
+
+  endCurrentChat(): void {
+    if (!this.currentChatId) return;
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.chatService.endChat(this.currentChatId).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        console.log('chat is ended')
+
+        this.loadChatHistory(); // تحديث قائمة الشاتات
+        this.currentChatId = null; // إلغاء تحديد الشات الحالي
+      },
+      error: (err) => {
+        // Show error in alert instead of errorMessage
+        alert(err.error?.message || 'Failed to end chat');
+        this.isLoading = false;
+      }
+    });
+  }
 }

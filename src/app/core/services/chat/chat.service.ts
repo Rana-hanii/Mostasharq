@@ -69,6 +69,14 @@ export default class ChatService {
     );
   }
 
+  //! End chat
+  endChat(chatId: number): Observable<IStartChat> {
+    return this.http.put<IStartChat>(
+      `${WEBSITE_BASE_URL}chats/${chatId}/end`,
+      { headers: this.getHeaders() }
+    );
+  }
+
   //! AI chat 
   //& msg req 
   //& msg res
