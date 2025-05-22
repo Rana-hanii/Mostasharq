@@ -1,0 +1,52 @@
+/* Remove old loader styles */
+.dot-flashing {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: #333;
+  color: #333;
+  animation: dotFlashing 1s infinite linear alternate;
+  display: inline-block;
+}
+@keyframes dotFlashing {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.dot-flashing-red {
+  display: none;
+}
+@keyframes dotFlashingRed {}
+
+/* New typing indicator styles */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  height: 2.5em;
+}
+
+.typing-indicator .dot {
+  height: 1em;
+  width: 1em;
+  margin: 0 0.15em;
+  background-color: #dc2626;
+  border-radius: 50%;
+  display: inline-block;
+  animation: typing-bounce 1s infinite both;
+}
+
+.typing-indicator .dot:nth-child(1) { animation-delay: 0s; }
+.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.7; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Reduce message spacing for compact look */
+.message-container {
+  margin-bottom: 0.25rem;
+}

@@ -27,6 +27,7 @@ interface SignUpResponse {
 interface LoginResponse {
   token_type: string;
   access_token: string;
+  user_id: number;
 }
 
 
@@ -68,6 +69,9 @@ export class AuthService {
         if (response.access_token) {
           localStorage.setItem('token', response.access_token);
         }
+        if (response.user_id) {
+          localStorage.setItem('user_id', response.user_id.toString());
+        }
       })
     );
   }
@@ -87,8 +91,9 @@ export class AuthService {
 
   // !get profile
   getUserData(): Observable<IProfile> {
+    const userId = localStorage.getItem('user_id');
     return this.http.get<IProfile>(
-      `${WEBSITE_BASE_URL}users/me`,
+      `${WEBSITE_BASE_URL}users/me?user_id=${userId}`,
       { headers: this.getHeaders() }
     );
   }

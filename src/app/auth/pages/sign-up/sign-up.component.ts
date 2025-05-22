@@ -57,6 +57,7 @@ export class SignUpComponent {
         Validators.minLength(11),
         Validators.maxLength(11)
       ]],
+      governorate: [null, [Validators.required]],
       password: [null, [Validators.required, Validators.minLength(8)]],
       confirmPassword: [null, [Validators.required]],
       terms: [false, Validators.requiredTrue]

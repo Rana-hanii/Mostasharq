@@ -6,6 +6,11 @@ import ChatService from '../../core/services/chat/chat.service';
 import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
 import { NavSidebarComponent } from '../../shared/components/nav-sidebar/nav-sidebar.component';
 
+interface ChatMessage {
+  type: 'user' | 'ai';
+  content: string;
+}
+
 @Component({
   selector: 'app-chat-ai',
   standalone: true,
@@ -23,6 +28,8 @@ export class ChatAiComponent implements OnInit {
   errorMessage = '';
   message = '';
   currentChatId: number | null = null;
+  messages: ChatMessage[] = [];
+  isTyping = false;
 
   ngOnInit(): void {
     this.loadChatHistory();
@@ -49,6 +56,8 @@ export class ChatAiComponent implements OnInit {
 
   //! start new chat
   startNewChat(): void {
+    if (this.isLoading) return; // Prevent multiple simultaneous requests
+    
     this.isLoading = true;
     this.errorMessage = '';
 
@@ -56,38 +65,49 @@ export class ChatAiComponent implements OnInit {
       next: (response) => {
         this.currentChatId = response.chat_id;
         this.isLoading = false;
+        this.messages = []; // Clear messages for new chat
         console.log('New chat started:', response);
-        // يمكنك إضافة إعادة تحميل التاريخ هنا إذا كنت تريد
         this.loadChatHistory();
       },
       error: (error) => {
         this.errorMessage = error.error?.message || 'Failed to start new chat';
         this.isLoading = false;
         console.error('Error starting new chat:', error);
+        alert(this.errorMessage); // Show error to user
       }
     });
   }
 
   //! send message
   sendMessage(): void {
-    if (!this.message.trim() || !this.currentChatId) return;
+    if (this.message.trim() && this.currentChatId) {
+      // Add user message to chat
+      this.messages.push({
+        type: 'user',
+        content: this.message
+      });
 
-    this.isLoading = true;
-    this.errorMessage = '';
+      const messageToSend = this.message;
+      this.message = ''; // Clear input
+      this.isTyping = true;
 
-    // هنا يمكنك إضافة دالة إرسال الرسالة في الـ ChatService
-    // this.chatService.sendMessage(this.currentChatId, this.message).subscribe({
-    //   next: (response) => {
-    //     this.message = '';
-    //     this.isLoading = false;
-    //     console.log('Message sent:', response);
-    //   },
-    //   error: (error) => {
-    //     this.errorMessage = error.error?.message || 'Failed to send message';
-    //     this.isLoading = false;
-    //     console.error('Error sending message:', error);
-    //   }
-    // });
+      this.chatService.sendMessage(messageToSend).subscribe({
+        next: (response) => {
+          console.log('AI response:', response);
+          console.log('AI response:', response.response);
+          // Add AI response to chat
+          this.messages.push({
+            type: 'ai',
+            content: response.response
+          });
+          this.isTyping = false;
+        },
+        error: (error) => {
+          console.error('Error sending message:', error);
+          this.isTyping = false;
+        }
+      });
+    }
   }
 
   //! get chat details
@@ -99,6 +119,7 @@ export class ChatAiComponent implements OnInit {
       next: (chat) => {
         this.currentChatId = chatId;
         this.isLoading = false;
+        // this.messages = []; // Clear messages for selected chat
         console.log('Chat details loaded:', chat);
       },
       error: (error) => {
@@ -110,21 +131,23 @@ export class ChatAiComponent implements OnInit {
   }
 
   endCurrentChat(): void {
-    if (!this.currentChatId) return;
+    if (!this.currentChatId || this.isLoading) return;
+    
     this.isLoading = true;
     this.errorMessage = '';
+    
     this.chatService.endChat(this.currentChatId).subscribe({
       next: (res) => {
         this.isLoading = false;
-        console.log('chat is ended')
-
-        this.loadChatHistory(); // تحديث قائمة الشاتات
-        this.currentChatId = null; // إلغاء تحديد الشات الحالي
+        console.log('Chat ended successfully');
+        this.loadChatHistory();
+        this.currentChatId = null;
       },
       error: (err) => {
-        // Show error in alert instead of errorMessage
-        alert(err.error?.message || 'Failed to end chat');
+        this.errorMessage = err.error?.message || 'Failed to end chat';
         this.isLoading = false;
+        console.error('Error ending chat:', err);
+        alert(this.errorMessage);
       }
     });
   }

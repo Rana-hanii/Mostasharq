@@ -42,7 +42,7 @@
 </aside>
 
 <!--! chat -->
-<div class="p-4 sm:ml-80">
+<div class="p-1 sm:ml-80">
     <div class="title mx-40 mt-10 mb-10 flex items-center justify-between">
         <h1 class="text-3xl font-semibold mx-3">
             {{ currentChatId ? 'Chat #' + currentChatId : 'Select a chat' }}
@@ -66,8 +66,30 @@
         </div>
     </div>
 
-    <div class="chat mx-40 grid grid-cols-1 gap-4 font-medium h-[70vh] overflow-y-scroll">
-        <!-- هنا سيتم عرض الرسائل -->
+    <div class="chat mx-40 grid grid-cols-1 gap-1 font-medium h-[70vh] overflow-y-scroll">
+        <div *ngFor="let msg of messages" class="message-container px-4 ">
+            <!-- User Message -->
+            <div *ngIf="msg.type === 'user'" class="flex justify-end mb-1">
+                <div class="bg-slate-900 text-white rounded-2xl rounded-br-none px-4 py-2 max-w-[70%] shadow-2xl/50 ">
+                    {{ msg.content }}
+                </div>
+            </div>
+            <!-- AI Response -->
+            <div *ngIf="msg.type === 'ai'" class="flex justify-start mb-1">
+                <div class="bg-red-50 text-slate-900 rounded-2xl rounded-bl-none px-4 py-2 max-w-[70%] shadow-2xl ">
+                    {{ msg.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typing indicator as AI message, just above the input -->
+    <div *ngIf="isTyping" class="flex justify-start mb-1 mx-40">
+      <div class="bg-gray-200 text-slate-900 rounded-2xl px-4 py-2 max-w-[70%] flex items-center typing-indicator">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
     </div>
 
     <div class="input px-40 mt-16">

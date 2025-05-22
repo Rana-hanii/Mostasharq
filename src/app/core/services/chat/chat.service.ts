@@ -3,7 +3,18 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { WEBSITE_BASE_URL } from '../../constance/WEBSITE_BASE_URL';
 import { IHistory } from '../../interfaces/IHistory';
-import { IStartChat } from '../../interfaces/IStartChat';
+
+interface IStartChat {
+  chat_id: number;
+  status: string;
+  started_at: string;
+  ended_at: string | null;
+}
+
+interface IChatResponse {
+  response: string;
+  chat_id: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -73,11 +84,24 @@ export default class ChatService {
   endChat(chatId: number): Observable<IStartChat> {
     return this.http.put<IStartChat>(
       `${WEBSITE_BASE_URL}chats/${chatId}/end`,
+      {},
       { headers: this.getHeaders() }
     );
   }
 
   //! AI chat 
-  //& msg req 
-  //& msg res
+  sendMessage(message: string): Observable<IChatResponse> {
+    const body = {
+      message,
+      chat_id: this.currentChatId ? this.currentChatId.toString() : '',
+      temperature: 0.7,
+      max_tokens: 8192
+    };
+    
+    return this.http.post<IChatResponse>(
+      `${WEBSITE_BASE_URL}chatttt`,
+      body,
+      { headers: this.getHeaders() }
+    );
+  }
 }
