@@ -104,4 +104,7 @@ export default class ChatService {
       { headers: this.getHeaders() }
     );
   }
+
+
 }
+

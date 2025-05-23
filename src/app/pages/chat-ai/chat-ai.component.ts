@@ -27,7 +27,7 @@ export class ChatAiComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   message = '';
-  currentChatId: number | null = null;
+  currentChatId: string | null = null;
   messages: ChatMessage[] = [];
   isTyping = false;
 
@@ -63,7 +63,7 @@ export class ChatAiComponent implements OnInit {
 
     this.chatService.startChat().subscribe({
       next: (response) => {
-        this.currentChatId = response.chat_id;
+        this.currentChatId = response.chat_id.toString();
         this.isLoading = false;
         this.messages = []; // Clear messages for new chat
         console.log('New chat started:', response);
@@ -93,6 +93,7 @@ export class ChatAiComponent implements OnInit {
 
       this.chatService.sendMessage(messageToSend).subscribe({
         next: (response) => {
+          console.log('Sending to chat_id:', this.currentChatId);
           console.log('AI response:', response);
           console.log('AI response:', response.response);
           // Add AI response to chat
@@ -103,6 +104,7 @@ export class ChatAiComponent implements OnInit {
           this.isTyping = false;
         },
         error: (error) => {
+          console.log('Sending to chat_id:', this.currentChatId);
           console.error('Error sending message:', error);
           this.isTyping = false;
         }
@@ -116,13 +118,15 @@ export class ChatAiComponent implements OnInit {
     this.errorMessage = '';
 
     this.chatService.getChat(chatId).subscribe({
+      
       next: (chat) => {
-        this.currentChatId = chatId;
+        console.log('Sending to chat_id:', this.currentChatId);
+        this.currentChatId = chatId.toString();
         this.isLoading = false;
-        // this.messages = []; // Clear messages for selected chat
         console.log('Chat details loaded:', chat);
       },
       error: (error) => {
+        console.log('Sending to chat_id:', this.currentChatId);
         this.errorMessage = error.error?.message || 'Failed to load chat details';
         this.isLoading = false;
         console.error('Error loading chat details:', error);
@@ -136,7 +140,7 @@ export class ChatAiComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
     
-    this.chatService.endChat(this.currentChatId).subscribe({
+    this.chatService.endChat(Number(this.currentChatId)).subscribe({
       next: (res) => {
         this.isLoading = false;
         console.log('Chat ended successfully');

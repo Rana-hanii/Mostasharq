@@ -209,10 +209,10 @@
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
             <div class="max-w-xl lg:max-w-lg">
-                <h2 class="text-4xl font-semibold tracking-tight text-white mb-10">Flexible Legal Support for Every Need
+                <h2 class="text-4xl font-semibold tracking-tight text-white mb-10">Flexible Legal Support for Every Need
                 </h2>
                 <p class="mt-4 text-lg text-gray-300">Get instant answers from AI, or connect with certified lawyers for
-                    professional legal advice tailored to your needs..</p>
+                    professional legal advice tailored to your needs..</p>
                 <div class="mt-6  gap-x-4 mx-auto">
                 </div>
             </div>
@@ -240,100 +240,143 @@
                     </div>
                     <dt class="mt-4 text-base font-semibold text-white">Talk to Real Lawyers</dt>
                     <dd class="mt-2 text-base/7 text-gray-400">Need personalized advice? Get direct support from
-                        certified Egyptian lawyers with flexible chat sessions and fast response times..</dd>
+                        certified Egyptian lawyers with flexible chat sessions and fast response times..</dd>
                 </div>
             </dl>
         </div>
         <div class="mx-auto my-16">
-            <form class=" mx-auto">
+            <form [formGroup]="paymentForm" class="mx-auto" (ngSubmit)="onCheckout()">
                 <div class="grid grid-cols-2">
                     <div class="mx-8">
                         <h3 class="mb-5 text-lg font-medium text-white text-center">Enter Your Data</h3>
                         <div class="relative z-0 w-full mb-10 group">
-                            <input type="email" name="floating_email" id="floating_email"
+                            <input type="email" id="floating_email"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
+                                placeholder=" " required formControlName="email" />
                             <label for="floating_email"
                                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
                                 address</label>
+                            @if (f['email'].touched && f['email'].errors) {
+                                <div class="text-red-500 text-sm font-semibold mt-1">
+                                    @if (f['email'].errors['required']) {
+                                        <span>Email is required</span>
+                                    }
+                                    @if (f['email'].errors['email']) {
+                                        <span>Please enter a valid email</span>
+                                    }
+                                </div>
+                            }
                         </div>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full my-6 group">
-                                <input type="text" name="floating_first_name" id="floating_first_name"
+                                <input type="text" id="floating_first_name"
                                     class="block py-2.5 p-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " required />
+                                    placeholder=" " required formControlName="firstName" />
                                 <label for="floating_first_name"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
                                     name</label>
+                                @if (f['firstName'].touched && f['firstName'].errors) {
+                                    <div class="text-red-500 text-sm font-semibold mt-1">
+                                        @if (f['firstName'].errors['required']) {
+                                            <span>First name is required</span>
+                                        }
+                                        @if (f['firstName'].errors['minlength']) {
+                                            <span>First name must be at least 2 characters</span>
+                                        }
+                                    </div>
+                                }
                             </div>
                             <div class="relative z-0 w-full my-6 group">
-                                <input type="text" name="floating_last_name" id="floating_last_name"
+                                <input type="text" id="floating_last_name"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " required />
+                                    placeholder=" " required formControlName="lastName" />
                                 <label for="floating_last_name"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
                                     name</label>
+                                @if (f['lastName'].touched && f['lastName'].errors) {
+                                    <div class="text-red-500 text-sm font-semibold mt-1">
+                                        @if (f['lastName'].errors['required']) {
+                                            <span>Last name is required</span>
+                                        }
+                                        @if (f['lastName'].errors['minlength']) {
+                                            <span>Last name must be at least 2 characters</span>
+                                        }
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div class="relative z-0 w-full mt-10 group">
-                            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone"
-                                id="floating_phone"
+                            <input type="tel" id="floating_phone"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " required />
+                                placeholder=" " required formControlName="phone" />
                             <label for="floating_phone"
                                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
-                                number (123-456-7890)</label>
+                                number (11 digits)</label>
+                            @if (f['phone'].touched && f['phone'].errors) {
+                                <div class="text-red-500 text-sm font-semibold mt-1">
+                                    @if (f['phone'].errors['required']) {
+                                        <span>Phone number is required</span>
+                                    }
+                                    @if (f['phone'].errors['pattern']) {
+                                        <span>Phone number must be exactly 11 digits</span>
+                                    }
+                                </div>
+                            }
                         </div>
+                        @if (errorMessage) {
+                            <div class="text-red-600 font-bold text-center mt-4">{{ errorMessage }}</div>
+                        }
                     </div>
                     <div class="mx-4">
-                        <h3 class="mb-10 text-lg font-medium text-white text-center">Choose the Plan That Fits Your
-                            Legal Needs</h3>
+                        <h3 class="mb-10 text-lg font-medium text-white text-center">Choose the Plan That Fits Your Legal Needs</h3>
                         <ul class="grid w-full gap-6 md:grid-cols-3">
                             <li>
-                                <input type="radio" id="hosting-small" name="hosting" value="hosting-small"
-                                    class="hidden peer" required />
-                                <label for="hosting-small"
+                                <input type="radio" id="plan-daily" formControlName="plan" value="daily" class="hidden peer" required />
+                                <label for="plan-daily"
                                     class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border  border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
                                     <div class="block">
                                         <div class="w-full text-lg font-semibold text-center text-white">EGP 199</div>
-                                        <div class="w-full text-center">Perfect for users who want to use the chatbot
-                                            only, without direct interaction with lawyers</div>
+                                        <div class="w-full text-center">Perfect for users who want to use the chatbot only, without direct interaction with lawyers</div>
                                     </div>
                                 </label>
                             </li>
                             <li>
-                                <input type="radio" id="hosting-big" name="hosting" value="hosting-big"
-                                    class="hidden peer" required />
-                                <label for="hosting-big"
-                                    class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
-                                    <div class="block">
-                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 699</div>
-                                        <div class="w-full  text-center">For companies or individuals who
-                                            require continuous legal support and unlimited access</div>
-                                    </div>
-                                </label>
-                            </li>
-                            <li>
-                                <input type="radio" id="hosting-big-2" name="hosting" value="hosting-big-2"
-                                    class="hidden peer" required />
-                                <label for="hosting-big-2"
+                                <input type="radio" id="plan-monthly" formControlName="plan" value="monthly" class="hidden peer" required />
+                                <label for="plan-monthly"
                                     class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
                                     <div class="block">
                                         <div class="w-full text-lg font-semibold text-center text-white">EGP 399</div>
-                                        <div class="w-full text-center">deal for users who need occasional access to
-                                            real lawyers along with the chatbot service</div>
+                                        <div class="w-full  text-center">For companies or individuals who require continuous legal support and unlimited access</div>
                                     </div>
                                 </label>
                             </li>
-
+                            <li>
+                                <input type="radio" id="plan-annually" formControlName="plan" value="annually" class="hidden peer" required />
+                                <label for="plan-annually"
+                                    class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
+                                    <div class="block">
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 699</div>
+                                        <div class="w-full text-center">For companies or individuals who require continuous legal support and unlimited access</div>
+                                    </div>
+                                </label>
+                            </li>
                         </ul>
+                        @if (f['plan'].touched && f['plan'].errors) {
+                            <div class="text-red-500 text-sm font-semibold mt-1">
+                                @if (f['plan'].errors['required']) {
+                                    <span>Please select a plan</span>
+                                }
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="btn !text-center !mx-auto my-6">
                     <button type="submit"
-                        class=" !w-[50%] text-white bg-red-800 hover:bg-white hover:text-red-800   font-bold rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center">Checkout</button>
+                        class="!w-[50%] text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center"
+                        [disabled]="isLoading">
+                        {{ isLoading ? 'Processing...' : 'Checkout' }}
+                    </button>
                 </div>
-
             </form>
         </div>
     </div>

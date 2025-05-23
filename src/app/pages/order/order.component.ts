@@ -4,7 +4,7 @@ import { NavDarkComponent } from "../../shared/components/nav-dark/nav-dark.comp
 
 @Component({
   selector: 'app-order',
-  imports: [RouterLink, RouterLinkActive, NavDarkComponent],
+  imports: [ NavDarkComponent],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
