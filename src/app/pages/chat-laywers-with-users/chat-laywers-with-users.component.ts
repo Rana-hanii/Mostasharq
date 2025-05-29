@@ -1,3 +1,4 @@
+import { LawyerService } from './../../core/services/lawyer/lawyer.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,20 +18,28 @@ export class ChatLaywersWithUsersComponent implements OnInit {
   currentChatId: number | null = null;
   messages: any[] = [];
   newMessage: string = '';
+  isLoadingChats = false;
+  chatsError = '';
 
+  lawyerService = inject(LawyerService);
   userChatsService = inject(UserChatsService);
-
   ngOnInit() {
     this.getChats();
   }
 
   getChats() {
-    this.userChatsService.getChats().subscribe({
-      next: (res) => {
+    this.isLoadingChats = true;
+    this.chatsError = '';
+    this.lawyerService.getChats().subscribe({
+      next: (res: any) => {
+        console.log(res);
         this.chats = Array.isArray(res) ? res : (res.chats || []);
+        this.isLoadingChats = false;
       },
-      error: () => {
+      error: (err: any) => {
         this.chats = [];
+        this.isLoadingChats = false;
+        this.chatsError = 'error in get chats';
       }
     });
   }
@@ -58,7 +67,7 @@ export class ChatLaywersWithUsersComponent implements OnInit {
   sendMessageFromUI() {
     if (!this.currentChatId || !this.newMessage.trim()) return;
     const msg = this.newMessage.trim();
-    this.userChatsService.sendMessage(this.currentChatId, msg).subscribe({
+    this.lawyerService.sendMessage(this.currentChatId, msg).subscribe({
       next: () => {
         this.userChatsService.getChatFull(this.currentChatId!).subscribe({
           next: (fullRes) => {

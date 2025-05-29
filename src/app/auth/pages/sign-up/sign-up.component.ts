@@ -58,10 +58,22 @@ export class SignUpComponent {
         Validators.maxLength(11)
       ]],
       governorate: [null, [Validators.required]],
+      license_number: [null],
       password: [null, [Validators.required, Validators.minLength(8)]],
       confirmPassword: [null, [Validators.required]],
       terms: [false, Validators.requiredTrue]
     }, { validators: this.passwordMatchValidator });
+
+    this.signupForm.get('role')?.valueChanges.subscribe((role) => {
+      const licenseControl = this.signupForm.get('license_number');
+      if (role === 'lawyer') {
+        licenseControl?.setValidators([Validators.required]);
+      } else {
+        licenseControl?.clearValidators();
+        licenseControl?.setValue(null);
+      }
+      licenseControl?.updateValueAndValidity();
+    });
   }
 
   get f() { return this.signupForm.controls; }

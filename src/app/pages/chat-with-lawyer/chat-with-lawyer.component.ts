@@ -125,7 +125,6 @@ export class ChatWithLawyerComponent implements OnInit {
       governorate: '',
       lawyer_balance: 0
     };
-    // جلب كل الرسائل من الشات
     this.userChatsService.getChatFull(chat.chat_id).subscribe({
       next: (res) => {
         this.messages = (res.messages || []).map((msg: any) => ({
@@ -155,7 +154,6 @@ export class ChatWithLawyerComponent implements OnInit {
             }));
           },
           error: () => {
-            // fallback: أضف الرسالة محلياً فقط
             this.messages.push({
               content: msg,
               is_user: true,
@@ -166,7 +164,7 @@ export class ChatWithLawyerComponent implements OnInit {
         this.newMessage = '';
       },
       error: (err) => {
-        // يمكنك إضافة إشعار بالخطأ هنا
+      
         console.error(err);
       }
     });
