@@ -19,7 +19,7 @@
             <img src="images/logo-dark.png" alt="logo" class="h-10 ">
         </a>
         <ul class="space-y-2 font-medium flex flex-col items-center justify-center">
-            <li class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+            <li class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
                 <a routerLink="/chat-ai" routerLinkActive="bg-gray-300 text-red-600"
                     class="flex items-center p-2  rounded-lg group">
                     <svg class="w-7 h-7  " xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li routerLink="/chat-with-lawyer" routerLinkActive="!bg-gray-300 !text-red-600"
-                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
                 <a class="flex items-center p-2  rounded-lg  group">
                     <svg class=" w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path
@@ -39,7 +39,7 @@
                 </a>
             </li>
             <li routerLink="/UserChats" routerLinkActive="!bg-gray-300 !text-red-600"
-                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
                 <a class="flex items-center p-2  rounded-lg  group">
                     <svg class=" w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path fill-rule="evenodd"
@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li routerLink="/order" routerLinkActive="!bg-gray-300 !text-red-600"
-                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
                 <a class="flex items-center p-2  rounded-lg  group">
                     <svg class=" w-7 h-7 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path fill-rule="evenodd"
@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li routerLink="/payment" routerLinkActive="!bg-gray-300 !text-red-600"
-                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 group">
+                class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
                 <a class="flex items-center p-2 rounded-lg group">
                     <svg class="w-7 h-7  " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor">
@@ -72,17 +72,17 @@
             </li>
         </ul>
 
-        <button routerLink="/profile" routerLinkActive="bg-red-700"
-            class="flex justify-center items-center w-10 h-10 mt-28 mb-4 rounded-full shadow-md bg-gradient-to-r from-[#ff0000] to-[white] hover:from-[red] hover:to-[#e23737] hover:cursor-pointer hover:scale-110 duration-300">
-            <svg viewBox="0 0 15 15" class="w-7 fill-gray-700">
-                <path
-                    d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                </path>
-            </svg>
-        </button>
+        <button routerLink="/profile" routerLinkActive=" !bg-gray-300 !text-red-600 "
+        class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
+        <a class="flex items-center p-2 rounded-lg group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 ">
+                <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+              </svg>
+        </a>
+    </button>
         <button
             (click)="logout()"
-            class="group flex items-center justify-start w-10 h-10 bg-red-600 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
+            class="group flex items-center justify-start w-10 h-10 bg-red-600 rounded-full  relative overflow-hidden transition-all duration-200 cursor-pointer shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
             <div
                 class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
                 <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">

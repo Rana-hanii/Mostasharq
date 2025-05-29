@@ -7,117 +7,48 @@
         <h2 class="text-3xl font-medium mx-3 my-6">Messeges</h2>
         <div class="btn text-center">
 
-            <button id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation"
-                class="btn bg-slate-950  px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:bg-red-800"
-                type="button">Start a chat
+            <button 
+                class="btn bg-slate-950  px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:scale-105  transition-all duration-300"
+                type="button" (click)="openModal()">Start a chat
             </button>
-            <!-- Dropdown menu -->
-            <div id="dropdownInformation"
-                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
-                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                    <div>Choose Law topic</div>
-                    <div class="font-medium truncate">Choose Law topic</div>
-                </div>
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Muhammed</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Karim</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Family
-                            Law</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">International
-                            Law</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Cybercrime
-                            & Internet Law</a>
-                    </li>
-                </ul>
-                <div class="py-2">
-                    <a href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-                        out</a>
-                </div>
-            </div>
+           
         </div>
         <div class=" mt-10 mb-10 flex items-center justify-between flex-col ">
             <div>
-                <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl">
-
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-
-                        <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
+                @if (isLoadingChats) {
+                    <div class="flex justify-center items-center my-8">
+                        <span class="loader"></span>
                     </div>
-
-                    <div class="det mx-3">
-                        <div class="flex justify-between items-center">
-                            <h5 class="text-lg font-semibold">Rana Hani</h5>
+                }
+                @else if (chats.length === 0) {
+                    <div class="text-gray-500 text-center my-8">
+                        No chats found, start a chat with a lawyer
+                    </div>
+                }
+                @else {
+                    @for (chat of chats; track chat) {
+                        <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl cursor-pointer"
+                             (click)="openChat(chat)">
+                            <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
+                                <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="det mx-3">
+                                <div class="flex justify-between items-center">
+                                    <h5 class="text-lg font-semibold">{{ chat.lawyer_name || chat.lawyer_first_name }}</h5>
+                                </div>
+                                <p class="font-medium text-sm">{{ chat.last_message || 'How can I help you?' }}</p>
+                            </div>
+                            <p class="mb-auto text-xs font-medium">{{ chat.last_message_time || '' }}</p>
                         </div>
-                        <p class="font-medium text-sm">How can I help you?</p>
-                    </div>
-                    <p class="mb-auto text-xs font-medium">6:15 PM</p>
-                </div>
-                <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl">
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-
-                        <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-                    </div>
-                    <div class="det mx-3">
-                        <div class="flex justify-between items-center">
-                            <h5 class="text-lg font-semibold">Rana Hani</h5>
-
-                        </div>
-
-                        <p class="font-medium text-sm">How can I help you?</p>
-                    </div>
-                    <p class="mb-auto text-xs font-medium">6:15 PM</p>
-                </div>
-                <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl">
-
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-
-                        <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-                    </div>
-
-                    <div class="det mx-3">
-                        <div class="flex justify-between items-center">
-                            <h5 class="text-lg font-semibold">Rana Hani</h5>
-
-                        </div>
-
-                        <p class="font-medium text-sm">How can I help you?</p>
-                    </div>
-                    <p class="mb-auto text-xs font-medium">6:15 PM</p>
-                </div>
+                    }
+                }
             </div>
+            
         </div>
         <div 
         class="contact absolute bottom-0 left-0 right-0  text-center">
@@ -128,6 +59,7 @@
 </aside>
 <!--! details -->
 <!--! chat -->
+@if (selectedLawyer && currentChatId) {
 <div class="p-4 sm:ml-80 ">
     <div class="title mx-40 mt-5 mb-12 flex items-center justify-between border-b-1 border-gray-300 px-2 py-4 ">
         <div class="flex items-center">
@@ -139,7 +71,7 @@
                         clip-rule="evenodd" />
                 </svg>
             </div>
-            <h1 class="text-2xl font-semibold mx-3">Rana Hani</h1>
+            <h1 class="text-2xl font-semibold mx-3">{{ selectedLawyer.first_name }} {{ selectedLawyer.last_name }}</h1>
         </div>
         <div class="icons bg-gray-50">
             <span routerLink="/profile"
@@ -154,35 +86,24 @@
     </div>
     <div class="chat   mx-40">
         <div class=" p-10 grid grid-cols-1 gap-4 font-medium bg-gray-100 rounded-3xl shadow-2xl/20 h-[80vh]">
-            <!-- <div class="request bg-slate-950 text-white p-6 rounded-2xl shadow-2xl/20 w-[25%] ms-auto rounded-tr-none">
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div> -->
-            <div class="response rounded-bl-none bg-red-50 text-slate-950  p-6 rounded-2xl shadow-2xl/20 w-[45%]">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo voluptatibus commodi, iure
-                    perspiciatis porro.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo
-                    voluptatibus
-                    commodi, iure
-                    perspiciatis porro.</p>
-            </div>
-            <div class="request rounded-tr-none bg-slate-950 text-white p-6 rounded-2xl shadow-2xl/20 w-[35%] ms-auto">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <div class="response rounded-bl-none bg-red-50 text-slate-950  p-6 rounded-2xl shadow-2xl/20 w-[40%]">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo voluptatibus commodi, iure
-                    perspiciatis porro.</p>
-            </div>
-            <div class="request rounded-tr-none bg-slate-950 text-white p-6 rounded-2xl shadow-2xl/20 w-[45%] ms-auto">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi qui quas aliquam similique
-                    libero.
-                </p>
-            </div>
+            @if (messages.length === 0) {
+              <div class="text-gray-400 text-center"> No messages yet , start a chat with a lawyer</div>
+            }
+            @for (msg of messages; track msg) {
+              <div 
+                [ngClass]="msg.is_user ? 'request rounded-tr-none bg-slate-950 text-white ms-auto w-[35%]' : 'response rounded-bl-none bg-red-50 text-slate-950 w-[45%]'"
+                class="p-6 rounded-2xl shadow-2xl/20">
+                <p>{{ msg.content || msg.text || msg.message }}</p>
+              </div>
+            }
             <div class="input  mt-8 ">
-                <form class="flex items-center  mx-auto">
+                <form class="flex items-center  mx-auto" (ngSubmit)="sendMessageFromUI()">
                     <label for="voice-search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <input type="text" id="voice-search"
                             class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-3xl  block w-full ps-10 p-5  "
-                            placeholder="Ask anything..." required />
+                            placeholder="Ask anything..." required 
+                            [(ngModel)]="newMessage" name="newMessage" />
                         <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
@@ -206,4 +127,35 @@
 
     </div>
 </div>
+}
 <!--! chat -->
+<!-- Modal for selecting governorate and showing lawyers -->
+@if (showModal) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm bg-opacity-50 transition-all duration-800 shadow-2xl">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-lg min-w-[30vw] min-h-[38vh] ">
+      <h2 class="text-xl font-bold mb-4">Start a chat with a lawyer</h2>
+      <form>
+        <label for="governorate" class="block mb-2 text-sm font-semibold text-gray-900">Select a governorate</label>
+        <select id="governorate" [(ngModel)]="selectedGovernorate" name="governorate" 
+          (change)="onGovernorateChange()" class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-lg block w-full p-2.5 mb-4 max-h-[50vh] overflow-y-auto ">
+          <option value="" disabled selected class=" text-sm text-center !font-semibold h-[5vh]">Choose a governorate</option>
+          @for (gov of governorates; track gov) {
+            <option class=" text-sm font-semibold text-center h-[5vh] !hover:bg-red-800 hover:text-white" [value]="gov">{{ gov }}</option>
+          }
+        </select>
+      </form>
+      <div class="mt-4 max-h-[50vh] overflow-y-auto">
+        <h3 class="font-semibold mb-2">Lawyers in this governorate:</h3>
+        @if (lawyers.length === 0) {
+          <div class="text-gray-500">No lawyers found.</div>
+        }
+        <ul>
+          @for (lawyer of lawyers; track lawyer) {
+            <li class="mb-2 p-2 bg-gray-50 rounded-lg hover:bg-slate-950 hover:text-white hover:shadow-2xl/50  cursor-pointer font-semibold text-center w-[90%] mx-auto transition-all duration-300 hover:scale-105 overflow-hidden" (click)="startChatWithLawyer(lawyer)">{{ lawyer.first_name }} {{ lawyer.last_name }}</li>
+          }
+        </ul>
+      </div>
+      <button (click)="closeModal()" class="mt-6 bg-red-700 text-white px-3 py-2 rounded-xl cursor-pointer hover:bg-red-800 transition-all duration-300 w-full mx-auto hover:-translate-y-1 font-semibold shadow-2xl/50">Close</button>
+    </div>
+  </div>
+}

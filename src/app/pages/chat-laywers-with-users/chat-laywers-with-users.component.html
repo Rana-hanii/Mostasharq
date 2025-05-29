@@ -8,71 +8,26 @@
   
         <div class=" mt-10 mb-10 flex items-center justify-between flex-col ">
             <div>
-                <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl">
-
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-
-                        <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-                    </div>
-
-                    <div class="det mx-3">
-                        <div class="flex justify-between items-center">
-                            <h5 class="text-lg font-semibold">Rana Hani </h5>
-                        </div>
-                        <p class="font-medium text-sm">How can I help you?</p>
-                    </div>
-                    <p class="mb-auto text-xs font-medium">6:15 PM</p>
-                </div>
-                <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl">
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-
-                        <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-                    </div>
-                    <div class="det mx-3">
-                        <div class="flex justify-between items-center">
-                            <h5 class="text-lg font-semibold">Rana Hani </h5>
-
-                        </div>
-
-                        <p class="font-medium text-sm">How can I help you?</p>
-                    </div>
-                    <p class="mb-auto text-xs font-medium">6:15 PM</p>
-                </div>
-                <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl">
-
-                    <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-
-                        <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                clip-rule="evenodd" />
-                        </svg>
-
-                    </div>
-
-                    <div class="det mx-3">
-                        <div class="flex justify-between items-center">
-                            <h5 class="text-lg font-semibold">Rana Hani </h5>
-
-                        </div>
-
-                        <p class="font-medium text-sm">How can I help you?</p>
-                    </div>
-                    <p class="mb-auto text-xs font-medium">6:15 PM</p>
-                </div>
+                @for (chat of chats; track chat) {
+                  <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl cursor-pointer"
+                       (click)="openChat(chat)">
+                      <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
+                          <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24" fill="currentColor">
+                              <path fill-rule="evenodd"
+                                  d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                                  clip-rule="evenodd" />
+                          </svg>
+                      </div>
+                      <div class="det mx-3">
+                          <div class="flex justify-between items-center">
+                              <h5 class="text-lg font-semibold">{{ chat.participant_name }}</h5>
+                          </div>
+                          <p class="font-medium text-sm">{{ chat.last_message || 'No messages yet' }}</p>
+                      </div>
+                      <p class="mb-auto text-xs font-medium">{{ chat.last_message_time || '' }}</p>
+                  </div>
+                }
             </div>
         </div>
         <div 
@@ -85,6 +40,7 @@
 <!--! details -->
 <!--! chat -->
 <div class="p-4 sm:ml-80 ">
+    @if (selectedUser && currentChatId) {
     <div class="title mx-40 mt-5 mb-12 flex items-center justify-between border-b-1 border-gray-300 px-2 py-4 ">
         <div class="flex items-center">
             <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
@@ -95,7 +51,7 @@
                         clip-rule="evenodd" />
                 </svg>
             </div>
-            <h1 class="text-2xl ms-2 font-semibold">Rana Hani</h1>
+            <h1 class="text-2xl ms-2 font-semibold">{{ selectedUser.first_name }}</h1>
         </div>
         <div class="icons bg-gray-50">
             <span routerLink="/profile"
@@ -110,35 +66,24 @@
     </div>
     <div class="chat   mx-40">
         <div class=" p-10 grid grid-cols-1 gap-4 font-medium bg-gray-100 rounded-3xl shadow-2xl/20 h-[80vh]">
-            <!-- <div class="request bg-slate-950 text-white p-6 rounded-2xl shadow-2xl/20 w-[25%] ms-auto rounded-tr-none">
-                <p>Lorem ipsum dolor sit amet.</p>
-            </div> -->
-            <div class="response rounded-bl-none bg-red-50 text-slate-950  p-6 rounded-2xl shadow-2xl/20 w-[45%]">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo voluptatibus commodi, iure
-                    perspiciatis porro.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo
-                    voluptatibus
-                    commodi, iure
-                    perspiciatis porro.</p>
-            </div>
-            <div class="request rounded-tr-none bg-slate-950 text-white p-6 rounded-2xl shadow-2xl/20 w-[35%] ms-auto">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <div class="response rounded-bl-none bg-red-50 text-slate-950  p-6 rounded-2xl shadow-2xl/20 w-[40%]">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo voluptatibus commodi, iure
-                    perspiciatis porro.</p>
-            </div>
-            <div class="request rounded-tr-none bg-slate-950 text-white p-6 rounded-2xl shadow-2xl/20 w-[45%] ms-auto">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi qui quas aliquam similique
-                    libero.
-                </p>
-            </div>
+            @if (messages.length === 0) {
+              <div class="text-gray-400 text-center">No messages yet</div>
+            }
+            @for (msg of messages; track msg) {
+              <div 
+                [ngClass]="msg.is_user ? 'request rounded-tr-none bg-slate-950 text-white ms-auto w-[35%]' : 'response rounded-bl-none bg-red-50 text-slate-950 w-[45%]'"
+                class="p-6 rounded-2xl shadow-2xl/20">
+                <p>{{ msg.content }}</p>
+              </div>
+            }
             <div class="input  mt-8 ">
-                <form class="flex items-center  mx-auto">
+                <form class="flex items-center  mx-auto" (ngSubmit)="sendMessageFromUI()">
                     <label for="voice-search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <input type="text" id="voice-search"
                             class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-3xl  block w-full ps-10 p-5  "
-                            placeholder="Ask anything..." required />
+                            placeholder="اكتب رسالتك..." required 
+                            [(ngModel)]="newMessage" name="newMessage" />
                         <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
@@ -161,5 +106,6 @@
         </div>
 
     </div>
+    }
 </div>
 <!--! chat -->
