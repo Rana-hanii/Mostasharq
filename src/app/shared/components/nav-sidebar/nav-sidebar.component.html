@@ -96,18 +96,24 @@
                 </div>
             </li>
         </ul>
-        <button routerLink="/profile" routerLinkActive=" !bg-gray-300 !text-red-600 "
-            class="hover:bg-gray-300 hover:text-red-600 rounded-lg text-white transition duration-200 cursor-pointer group">
-            <a class="flex items-center p-2 rounded-lg group">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 ">
-                    <path fill-rule="evenodd"
-                        d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </a>
-        </button>
+
+        <button  routerLink="/profile" routerLinkActive=" bg-gray-300 !text-red-600 rounded-lg "
+        class="group flex items-center justify-start w-10 h-10 text-white relative overflow-hidden transition-all duration-500 cursor-pointer  hover:w-48 hover:bg-gray-300/10  hover:rounded-lg active:translate-x-1 active:translate-y-1">
+        <div
+            class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 ">
+                <path fill-rule="evenodd"
+                    d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                    clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div
+            class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+            Profile
+        </div>
+    </button>
         <button (click)="logout()"
-            class="group flex items-center justify-start w-10 h-10 bg-red-600 rounded-full  relative overflow-hidden transition-all duration-200 cursor-pointer shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
+            class="group flex items-center justify-start w-10 h-10 text-white relative overflow-hidden transition-all duration-500 cursor-pointer  hover:w-48 hover:bg-red-800/40  hover:rounded-lg active:translate-x-1 active:translate-y-1">
             <div
                 class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
                 <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">

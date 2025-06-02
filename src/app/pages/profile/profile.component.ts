@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth.service';
 import { NavDarkComponent } from "../../shared/components/nav-dark/nav-dark.component";
+import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
 
 interface ApiResponse {
@@ -29,7 +30,7 @@ interface IProfile {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NavDarkComponent],
+  imports: [CommonModule, ReactiveFormsModule, NavSidebarComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
