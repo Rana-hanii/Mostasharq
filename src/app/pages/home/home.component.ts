@@ -264,15 +264,14 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         mouseControls: true,
         touchControls: true,
         gyroControls: false,
-        minHeight: 200.0,
-        minWidth: 200.0,
-        scale: 1.0,
-        scaleMobile: 1.0,
-        color: 0x480808,
-        waveSpeed: 0.7,
-        waveHeight: 20,
-        shininess: 30,
-        zoom: 0.75
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x430606,
+        shininess: 38.00,
+        waveHeight: 24.50,
+        zoom: 0.70
       });
 
       console.log('VANTA effect initialized successfully');
