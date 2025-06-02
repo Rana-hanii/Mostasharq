@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../core/services/subscription/subscription.service';
 import { NavDarkComponent } from "../../shared/components/nav-dark/nav-dark.component";
+import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
 @Component({
   selector: 'app-payment',
-  imports: [ NavDarkComponent, ReactiveFormsModule ],
+  imports: [ ReactiveFormsModule, NavSidebarComponent],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
