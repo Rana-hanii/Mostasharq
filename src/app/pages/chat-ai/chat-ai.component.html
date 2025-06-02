@@ -63,11 +63,9 @@
           
         </div>
     </div>
-
     <!--! chat box -->
-    
-    <div class="h-[70vh]">
-        <div class="chat mx-40 grid grid-cols-1 gap-1 font-medium h-[70vh] overflow-y-scroll">
+    <div class="h-[70vh] overflow-y-scroll">
+        <div class="chat mx-40 grid grid-cols-1 gap-1 font-medium h-[70vh] ">
             <div *ngFor="let msg of messages" class="message-container px-4 ">
                 <!-- User Message -->
                 <div *ngIf="msg.type === 'user'" class="flex justify-end mb-1">
@@ -93,7 +91,7 @@
           </div>
         </div>
     
-        <div class="input px-40 mt-16">
+        <div class="input px-40 mt-16 fixed bottom-6 w-[80%] z-50"> 
             <form (ngSubmit)="sendMessage()" class="flex items-center mx-auto">
                 <label for="voice-search" class="sr-only">Search</label>
                 <div class="relative w-full">
@@ -122,10 +120,11 @@
                 <button type="submit"
                     [disabled]="!currentChatId || isLoading || !message.trim()"
                     class="inline-flex items-center ms-2 text-sm font-medium text-white bg-gray-100/10 border border-gray-200  rounded-3xl p-5 shadow-2xl/30 hover:bg-red-800/40 hover:-translate-y-2 hover:text-white transition-all duration-300 disabled:opacity-50">
-                    <svg class="w-4 h-4 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="h-5 w-5 text-white">
+                    <path
+                        d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                </svg>
                 </button>
             </form>
         </div>
