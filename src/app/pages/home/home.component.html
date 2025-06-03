@@ -10,9 +10,9 @@
                     [class]="isHeroVisible ? 'text-3xl text-red-400' :'text-3xl text-red-700' ">M</span>ostashra<span
                     [class]="isHeroVisible ? 'text-3xl text-red-400' :'text-3xl text-red-700' ">Q.</span></span>
         </a>
-        <div routerLink="/sign-up" class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse sm:text-center">
+        <div routerLink="/sign-up" class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse sm:text-center ">
             <button type="button"
-                class="text-white bg-slate-950 hover:bg-red-700  font-medium rounded-2xl text-sm px-4 py-4 text-center shadow-xl/30 transition-all">Get
+                class="text-white bg-slate-950 hover:bg-red-700  font-medium rounded-2xl text-sm px-4 py-4 cursor-pointer text-center shadow-xl/30 transition-all">Get
                 started</button>
         </div>
     </div>
@@ -60,13 +60,13 @@
                 <div
                     class="animation shadow-2xl/40 backdrop-blur-lg overflow-hidde bg-gray  my-10 rounded-l-none rounded-3xl py-10 px-8 lg:py-24 lg:px-16 flex flex-col items-center justify-center text-center lg:text-left ">
                     <div class="cube-container">
-                        <div class="cube">
-                            <div class="face front ">AI Egyptian Law</div>
-                            <div class="face back">Simulating real cases </div>
-                            <div class="face right">Explore the Future</div>
-                            <div class="face left">Instant Legal Insights</div>
-                            <div class="face top">Smart Legal Assistant</div>
-                            <div class="face bottom">Built for Egypt</div>
+                        <div class="cube rounded-3xl">
+                            <div class="face front !bg-black/30 backdrop-blur-sm "><i class="fa-solid fa-user-tie text-2xl"></i></div>
+                            <div class="face back !bg-black/30 backdrop-blur-sm "><i class="fa-solid fa-scale-balanced  "></i></div>
+                            <div class="face right !bg-white/20 backdrop-blur-sm !text-black "><i class="fa-solid fa-tablet"></i></div>
+                            <div class="face left !bg-white/20 backdrop-blur-sm !text-black "><i class="fa-solid fa-paper-plane"></i></div>
+                            <div class="face top"><i class="fa-solid fa-gavel"></i></div>
+                            <div class="face bottom "><i class="fa-solid fa-window-restore"></i></div>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </button>
-                                    <!-- فقط الـ tooltip هنا -->
+                                    
                                     <div
                                         class="bg-slate-950 p-5 rounded-md group-hover:flex hidden absolute top-1/2 -translate-y-1/2 -left-2 -translate-x-full shadow-2xl/40 ">
                                         <span class="text-zinc-400 whitespace-nowrap font-medium text-lg">Search for a

@@ -19,16 +19,17 @@
     height: 100%;
     transform-style: preserve-3d;
     animation: rotate 12s infinite linear;
+
   }
   
   .face {
     --french: linear-gradient(
         to right,
         #000000cc,
-        #ffffff,
-        #ffffff,
-        #ffffff,
-        #B91C1C
+        #000000cc,
+        #000000cc,
+        #000000cc,
+        #000000cc
       )
       1;
     position: absolute;
@@ -38,11 +39,13 @@
     font-size: 18px;
     text-align: center;
     line-height: 200px;
-    background: black;
+    /* backdrop-filter: blur(1000px); */
+    /* background-color: rgba(0, 0, 0, 0.7); */
     border: 1px solid;
     border-image: var(--french);
     text-align: center;
-    /* border-radius: 50px; */
+    /* border-radius: 100px; */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
   
   .front {
