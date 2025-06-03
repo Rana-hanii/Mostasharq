@@ -3,9 +3,8 @@
 <aside id="sidebar-multi-level-sidebar"
     class="fixed bottom-0 top-0 left-20 z-40 w-80 mx-2 my-6 transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-200 rounded-3xl rounded-l-none ">
-        <h2 class="text-3xl font-medium mx-3 my-6">Users</h2>
-  
+    <div class="h-full px-3 py-4  backdrop-blur-lg bg-gray-100/10 rounded-3xl rounded-l-none ">
+        <h2 class="text-3xl font-medium  text-white mx-3 my-6">Users</h2>
         <div class=" mt-10 mb-10 flex items-center justify-between flex-col ">
             <div>
                 @if (isLoadingChats) {
@@ -40,7 +39,7 @@
         <div 
         class="contact absolute bottom-0 left-0 right-0  text-center">
             <h3 routerLink="/ContactUs" routerLinkActive="bg-red-800"
-             class="text-xl font-medium   bg-slate-950 text-white px-4 py-4 rounded-br-3xl border-3 border-gray-200 cursor-pointer hover:bg-red-800 ">Contact-Us</h3>
+             class="text-xl font-medium   bg-slate-950/20 text-white px-4 py-4 rounded-br-3xl  cursor-pointer hover:bg-red-800/30 hover:scale-110 hover:shadow-2xl/50 hover:-translate-y-1 hover:rounded-r-3xl transition-all duration-300  ">Contact-Us</h3>
         </div>
     </div>
 </aside>
@@ -116,3 +115,4 @@
     }
 </div>
 <!--! chat -->
+<div id="vanta-bg"></div>
