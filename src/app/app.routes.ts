@@ -14,7 +14,7 @@ import { lawyerRoutes } from './routes/lawyer/lawyer.routes';
 export const routes: Routes = [
 
   {
-    path: 'home',
+    path: '',
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
