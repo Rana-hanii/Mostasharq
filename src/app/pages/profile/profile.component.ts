@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../auth/services/auth.service';
-import { NavDarkComponent } from "../../shared/components/nav-dark/nav-dark.component";
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
 

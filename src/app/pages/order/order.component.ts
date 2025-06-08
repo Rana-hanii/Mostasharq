@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NavDarkComponent } from "../../shared/components/nav-dark/nav-dark.component";
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
 @Component({

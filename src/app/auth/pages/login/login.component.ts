@@ -63,9 +63,19 @@ export class LoginComponent {
           this.loginForm.reset();
           this.isLoading = false;
           localStorage.setItem('token', res.access_token);
-          setTimeout(() => {
-            this.router.navigate(['/chat-ai']);
-          }, 1500);
+          console.log('hello from auth');
+          const role = localStorage.getItem('role');
+          if (role === 'client') {
+            this.router.navigate(['/client/chat-ai']);
+          } else if (role === 'lawyer') {
+            this.router.navigate(['/lawyer/chat-ai']);
+          } else if (role === 'company') {
+            this.router.navigate(['/company/chat-ai']);
+          } else if (role === 'dashboard') {
+            this.router.navigate(['/dashboard/dashboard']);
+          } else {
+            this.router.navigate(['/login']);
+          }
         },
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;

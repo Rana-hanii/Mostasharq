@@ -3,16 +3,15 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { WEBSITE_BASE_URL } from '../../core/constance/WEBSITE_BASE_URL';
 
-  interface IProfile {
-    email: string;
-    first_name: string;
-    last_name: string;
-    phone_number: string;
-    user_id: number;
-    role: string;
-    created_at: string;
-  }
-
+interface IProfile {
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  user_id: number;
+  role: string;
+  created_at: string;
+}
 
 interface SignUpResponse {
   email: string;
@@ -25,29 +24,46 @@ interface SignUpResponse {
 }
 
 interface LoginResponse {
-  token_type: string;
   access_token: string;
+  token_type: string;
   user_id: number;
+  user_role: string;
 }
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private userRole: string | null = null;
 
   constructor() {}
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'ngrok-skip-browser-warning': 'true'
+      Authorization: `Bearer ${token}`,
+      'ngrok-skip-browser-warning': 'true',
     });
-  } 
+  }
 
+  // Get user role
+  getUserRole(): string | null {
+    if (this.userRole) {
+      return this.userRole;
+    }
+    const role = localStorage.getItem('role');
+    if (role) {
+      this.userRole = role;
+      return role;
+    }
+    return null;
+  }
 
+  // Set user role
+  setUserRole(role: string): void {
+    this.userRole = role;
+  }
 
   // !sign up
   sendSignUp(data: object): Observable<SignUpResponse> {
@@ -72,6 +88,10 @@ export class AuthService {
         if (response.user_id) {
           localStorage.setItem('user_id', response.user_id.toString());
         }
+        if (response.user_role) {
+          localStorage.setItem('role', response.user_role);
+          this.setUserRole(response.user_role);
+        }
       })
     );
   }
@@ -84,23 +104,27 @@ export class AuthService {
         tap(() => {
           localStorage.removeItem('token');
           localStorage.removeItem('user_id');
+          this.userRole = null;
         })
       );
   }
 
-
   // !get profile
   getUserData(): Observable<IProfile> {
     const userId = localStorage.getItem('user_id');
-    return this.http.get<IProfile>(
-      `${WEBSITE_BASE_URL}users/me?user_id=${userId}`,
-      { headers: this.getHeaders() }
-    );
+    return this.http
+      .get<IProfile>(`${WEBSITE_BASE_URL}users/me?user_id=${userId}`, {
+        headers: this.getHeaders(),
+      })
+      .pipe(
+        tap((userData) => {
+          this.setUserRole(userData.role);
+        })
+      );
   }
-  
+
   // !update user data
   updateUserData(data: object): Observable<any> {
-    
     return this.http.put(`${WEBSITE_BASE_URL}users/me`, data, {
       headers: this.getHeaders(),
     });
@@ -116,13 +140,13 @@ export class AuthService {
   // !delete account
   deleteAccount(): Observable<any> {
     return this.http
-    .post(`${WEBSITE_BASE_URL}logout`, {}, { headers: this.getHeaders() })
-    .pipe(
-      tap(() => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user_id');
-      })
+      .post(`${WEBSITE_BASE_URL}logout`, {}, { headers: this.getHeaders() })
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          this.userRole = null;
+        })
       );
   }
 }
- 
