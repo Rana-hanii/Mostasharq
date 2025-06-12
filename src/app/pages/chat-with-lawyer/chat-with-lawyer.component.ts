@@ -36,6 +36,8 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
   userChatsService = inject(UserChatsService);
   router = inject(Router);
 
+  isTyping: boolean = false;
+
   ngOnInit() {
     this.getGovernorates();
     this.getChats();

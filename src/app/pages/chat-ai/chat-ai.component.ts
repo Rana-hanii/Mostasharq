@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IHistory } from '../../core/interfaces/IHistory';
 import ChatService from '../../core/services/chat/chat.service';
 import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
@@ -8,7 +9,7 @@ import { NavSidebarComponent } from '../../shared/components/nav-sidebar/nav-sid
 
 interface ChatMessage {
   type: 'user' | 'ai';
-  content: string;
+  content: string | SafeHtml;
 }
 
 declare var VANTA: any;
@@ -26,6 +27,7 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly chatService = inject(ChatService);
   private vantaEffect: any = null;
   private readonly ngZone = inject(NgZone);
+  private sanitizer = inject(DomSanitizer);
 
   //! variables
   chatHistory: IHistory | null = null;
@@ -114,7 +116,7 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('Chat history loaded:', history);
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Failed to load chat history';
+        this.errorMessage = error.error?.detail || 'Failed to load chat history';
         this.isLoading = false;
         console.error('Error loading chat history:', error);
       }
@@ -137,10 +139,11 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadChatHistory();
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Failed to start new chat';
+        this.errorMessage = error.error?.detail || 'Failed to start new chat';
         this.isLoading = false;
         console.error('Error starting new chat:', error);
-        alert(this.errorMessage); // Show error to user
+        console.log(error)
+        // alert(this.errorMessage); // Show error to user
       }
     });
   }
@@ -160,19 +163,14 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.chatService.sendMessage(messageToSend).subscribe({
         next: (response) => {
-          console.log('Sending to chat_id:', this.currentChatId);
-          console.log('AI response:', response);
-          console.log('AI response:', response.response);
-          // Add AI response to chat
+          // Add AI response to chat (formatted)
           this.messages.push({
             type: 'ai',
-            content: response.response
+            content: this.formatModelResponse(response.response)
           });
           this.isTyping = false;
         },
         error: (error) => {
-          console.log('Sending to chat_id:', this.currentChatId);
-          console.error('Error sending message:', error);
           this.isTyping = false;
         }
       });
@@ -185,15 +183,17 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
     this.errorMessage = '';
 
     this.chatService.getChat(chatId).subscribe({
-      
       next: (chat) => {
-        console.log('Sending to chat_id:', this.currentChatId);
         this.currentChatId = chatId.toString();
         this.isLoading = false;
+        // تعيين الرسائل للعرض
+        this.messages = (chat.messages || []).map((msg: any) => ({
+          type: msg.role === 'user' ? 'user' : 'ai',
+          content: msg.role === 'ai' ? this.formatModelResponse(msg.content || msg.text || msg.message) : (msg.content || msg.text || msg.message)
+        }));
         console.log('Chat details loaded:', chat);
       },
       error: (error) => {
-        console.log('Sending to chat_id:', this.currentChatId);
         this.errorMessage = error.error?.message || 'Failed to load chat details';
         this.isLoading = false;
         console.error('Error loading chat details:', error);
@@ -232,6 +232,39 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.vantaEffect = null;
     }
+  }
+
+  formatModelResponse(message: string): SafeHtml {
+    let formattedMessage = message;
+
+    // العناوين
+    formattedMessage = formattedMessage.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    formattedMessage = formattedMessage.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    formattedMessage = formattedMessage.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+    // bold
+    formattedMessage = formattedMessage.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // italic
+    formattedMessage = formattedMessage.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    // strikethrough
+    formattedMessage = formattedMessage.replace(/--(.*?)--/g, '<s>$1</s>');
+
+    // القوائم المرقمة (ol/li)
+    formattedMessage = formattedMessage.replace(/^\s*\d+\.\s+(.*)$/gim, '<li>$1</li>');
+    formattedMessage = formattedMessage.replace(/(<li>.*?<\/li>)/gims, '<ol>$1</ol>');
+
+    // القوائم النقطية (ul/li)
+    formattedMessage = formattedMessage.replace(/^\s*-\s+(.*)$/gim, '<li>$1</li>');
+    formattedMessage = formattedMessage.replace(/(<li>.*?<\/li>)/gims, '<ul>$1</ul>');
+
+    // New lines
+    formattedMessage = formattedMessage.replace(/\n/g, '<br>');
+    // Tabs
+    formattedMessage = formattedMessage.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+    // Escaped quotes
+    formattedMessage = formattedMessage.replace(/\\"/g, '"');
+
+    return this.sanitizer.bypassSecurityTrustHtml(formattedMessage);
   }
 }
 

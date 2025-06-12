@@ -10,3 +10,26 @@ html, body {
   font-family: "Montserrat", sans-serif !important;
   font-optical-sizing: auto;
 }
+
+::-webkit-scrollbar {
+  width: 4px !important;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(2,6,24, 0.85); 
+  
+  border-radius: 8px;
+  min-height: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(2,6,24, 0.85); 
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(2,6,24,0.85) transparent;
+}

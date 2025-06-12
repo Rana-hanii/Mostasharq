@@ -71,27 +71,35 @@
         </div>
     </div>
     <div class="chat   mx-40">
-        <div class=" p-10 grid grid-cols-1 gap-4 font-medium bg-gray-100 rounded-3xl shadow-2xl/20 h-[80vh]">
+        <div class="p-10 grid grid-cols-1 gap-4 font-medium backdrop-blur-lg bg-gray-100/10 rounded-3xl shadow-2xl/20 h-[80vh]">
             @if (messages.length === 0) {
               <div class="text-gray-400 text-center">No messages yet</div>
             }
             @for (msg of messages; track msg) {
               <div 
-                [ngClass]="msg.is_user ? 'request rounded-tr-none bg-slate-950 text-white ms-auto w-[35%]' : 'response rounded-bl-none bg-red-50 text-slate-950 w-[45%]'"
+                [ngClass]="msg.is_user ? 'request rounded-tr-none bg-red-900/50 text-white ms-auto w-[35%]' : 'response rounded-bl-none bg-gray-900/30 border border-gray-200 text-white w-[45%]'"
                 class="p-6 rounded-2xl shadow-2xl/20">
                 <p>{{ msg.content }}</p>
               </div>
             }
-            <div class="input  mt-8 ">
-                <form class="flex items-center  mx-auto" (ngSubmit)="sendMessageFromUI()">
+            <!-- Typing indicator as AI message, just above the input -->
+            <div *ngIf="isTyping" class="flex justify-start mb-1">
+              <div class="bg-gray-200 text-slate-900 rounded-2xl px-4 py-2 max-w-[70%] flex items-center typing-indicator">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+            </div>
+            <div class="input mt-8">
+                <form class="flex items-center mx-auto" (ngSubmit)="sendMessageFromUI()">
                     <label for="voice-search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <input type="text" id="voice-search"
-                            class="bg-gray-200 border border-gray-200 text-gray-900 text-sm rounded-3xl  block w-full ps-10 p-5  "
+                            class="backdrop-blur-lg bg-gray-100/10 border border-gray-100/10 text-white text-sm rounded-3xl block w-full ps-10 p-5"
                             placeholder="write your message..." required 
                             [(ngModel)]="newMessage" name="newMessage" />
                         <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                            <svg class="w-4 h-4 text-gray-400 hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2"
@@ -100,7 +108,7 @@
                         </button>
                     </div>
                     <button type="submit"
-                        class="inline-flex items-center ms-2 text-sm font-medium text-white bg-slate-900 rounded-3xl p-5 shadow-2xl/30  hover:bg-slate-800 border border-slate-900 ">
+                        class="inline-flex items-center ms-2 text-sm font-medium text-white bg-gray-900/10 border border-gray-200 rounded-3xl p-5 shadow-2xl/30 hover:bg-red-800/30 hover:scale-105 transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                             class="h-5 w-5 text-white">
                             <path
@@ -110,7 +118,6 @@
                 </form>
             </div>
         </div>
-
     </div>
     }
 </div>

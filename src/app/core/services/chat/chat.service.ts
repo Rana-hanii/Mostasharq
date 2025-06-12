@@ -11,6 +11,10 @@ interface IStartChat {
   ended_at: string | null;
 }
 
+interface IChatDetailsResponse extends IStartChat {
+  messages: Array<{ content: string; role: 'user' | 'ai' }>;
+}
+
 interface IChatResponse {
   response: string;
   chat_id: string;
@@ -59,9 +63,9 @@ export default class ChatService {
 
  
   //! get this chat 
-  getChat(chatId: number): Observable<IStartChat> {
-    return this.http.get<IStartChat>(
-      `${WEBSITE_BASE_URL}chats/${chatId}`,
+  getChat(chatId: number): Observable<IChatDetailsResponse> {
+    return this.http.get<IChatDetailsResponse>(
+      `${WEBSITE_BASE_URL}chats/${chatId}/full`,
       { headers: this.getHeaders() }
     );
   }

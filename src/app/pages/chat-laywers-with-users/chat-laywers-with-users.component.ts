@@ -25,6 +25,7 @@ export class ChatLaywersWithUsersComponent implements OnInit, AfterViewInit, OnD
   newMessage: string = '';
   isLoadingChats = false;
   chatsError = '';
+  isTyping: boolean = false;
 
   lawyerService = inject(LawyerService);
   userChatsService = inject(UserChatsService);
