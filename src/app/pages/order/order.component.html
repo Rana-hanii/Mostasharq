@@ -29,106 +29,35 @@
 
     <!-- Order Form -->
     <div class="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
-        <form class="mx-auto">
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                <!-- Company Information -->
-                <div class="space-y-6">
-                    <h3 class="text-lg font-medium text-white text-center">Company Information</h3>
-                    <div class="relative z-0 w-full group">
-                        <input type="text" name="company_name" id="company_name"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " required />
-                        <label for="company_name"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company
-                            Name</label>
+        <form class="mx-auto" [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+            <div class="space-y-6">
+                <h3 class="text-lg font-medium text-white text-center">Order Type</h3>
+                <div class="mt-4">
+                    <div class="flex items-center mb-4">
+                        <input id="legal_qa" type="radio" formControlName="order_type" value="legal_qa"
+                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="legal_qa" class="ms-2 text-sm font-medium text-gray-300">Legal QA</label>
                     </div>
-
-                    <div class="relative z-0 w-full group">
-                        <input type="email" name="company_email" id="company_email"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " required />
-                        <label for="company_email"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company
-                            Email</label>
+                    <div class="flex items-center mb-4">
+                        <input id="data_analysis" type="radio" formControlName="order_type" value="data_analysis"
+                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="data_analysis" class="ms-2 text-sm font-medium text-gray-300">Data Analysis</label>
                     </div>
-
-                    <div class="relative z-0 w-full group">
-                        <input type="tel" name="company_phone" id="company_phone"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " required />
-                        <label for="company_phone"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company
-                            Phone</label>
-                    </div>
-
-                    <div class="relative z-0 w-full group">
-                        <textarea name="company_requirements" id="company_requirements"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " required></textarea>
-                        <label for="company_requirements"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">System
-                            Requirements</label>
+                    <div class="flex items-center mb-4">
+                        <input id="custom_training" type="radio" formControlName="order_type" value="custom_training"
+                            class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="custom_training" class="ms-2 text-sm font-medium text-gray-300">Custom Training</label>
                     </div>
                 </div>
 
-                <!-- System Features Selection -->
-                <div class="space-y-6">
-                    <h3 class="text-lg font-medium text-white text-center">System Features</h3>
-                    <div class="grid gap-4">
-                        <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                            <input type="checkbox" id="ai_chatbot" name="features" value="ai_chatbot"
-                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                            <label for="ai_chatbot" class="ml-2 text-sm font-medium text-gray-300">
-                                AI Legal Chatbot Integration
-                            </label>
-                        </div>
-                        <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                            <input type="checkbox" id="document_management" name="features" value="document_management"
-                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                            <label for="document_management" class="ml-2 text-sm font-medium text-gray-300">
-                                Document Management System
-                            </label>
-                        </div>
-                        <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                            <input type="checkbox" id="case_tracking" name="features" value="case_tracking"
-                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                            <label for="case_tracking" class="ml-2 text-sm font-medium text-gray-300">
-                                Case Tracking System
-                            </label>
-                        </div>
-                        <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                            <input type="checkbox" id="analytics" name="features" value="analytics"
-                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                            <label for="analytics" class="ml-2 text-sm font-medium text-gray-300">
-                                Analytics Dashboard
-                            </label>
-                        </div>
-                        <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
-                            <input type="checkbox" id="multi_user" name="features" value="multi_user"
-                                class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500">
-                            <label for="multi_user" class="ml-2 text-sm font-medium text-gray-300">
-                                Multi-User Support
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mt-6">
-                        <label for="user_count" class="block text-sm font-medium text-gray-300 mb-2">Number of
-                            Users</label>
-                        <input type="number" id="user_count" name="user_count" min="1" max="1000"
-                            class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-red-500 focus:border-red-500">
-                    </div>
-
-                    <div class="mt-6">
-                        <label for="deployment_type" class="block text-sm font-medium text-gray-300 mb-2">Deployment
-                            Type</label>
-                        <select id="deployment_type" name="deployment_type"
-                            class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-red-500 focus:border-red-500">
-                            <option value="cloud">Cloud Hosted</option>
-                            <option value="on_premise">On-Premise</option>
-                            <option value="hybrid">Hybrid</option>
-                        </select>
-                    </div>
+                <h3 class="text-lg font-medium text-white text-center mt-8">Order Description</h3>
+                <div class="relative z-0 w-full group">
+                    <textarea formControlName="description" id="description"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" " required></textarea>
+                    <label for="description"
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Describe
+                        your legal system requirements</label>
                 </div>
             </div>
 
@@ -139,5 +68,45 @@
                 </button>
             </div>
         </form>
+    </div>
+</section>
+
+<!-- Orders List Section -->
+<section id="orders-list" class="relative isolate pt-24 bg-slate-950 py-10">
+    <div class="mx-auto max-w-4xl text-center">
+        <h2 class="text-base/7 font-semibold text-red-700">Your Orders</h2>
+        <p class="mt-2 text-5xl font-semibold tracking-tight text-balance text-white sm:text-6xl">View and Track Your Legal Systems</p>
+    </div>
+
+    <div class="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
+        <div *ngIf="ordersList.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div *ngFor="let order of ordersList"
+                class="bg-gray-800 p-6 rounded-lg shadow-xl text-white flex flex-col justify-between transform transition-transform duration-300 hover:scale-105 hover:bg-gray-700 border border-gray-700">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-2xl font-bold text-red-400">Order #{{ order.order_id || 'N/A' }}</h3>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg font-semibold capitalize">{{ order.status || 'N/A' }}</span>
+                            <span class="w-4 h-4 rounded-full"
+                                [ngClass]="getStatusColorClass(order.status)"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-1"><span class="font-medium">Type:</span> {{ order.order_type || 'N/A' }}</p>
+                    <p class="text-gray-300 mb-1"><span class="font-medium">Description:</span> {{ order.description || 'N/A' }}</p>
+                    <p class="text-gray-300 mb-1"><span class="font-medium">Created At:</span> {{ order.created_at ? (order.created_at | date:'medium') : 'N/A' }}</p>
+                    <p class="text-gray-300"><span class="font-medium">Updated At:</span> {{ order.updated_at ? (order.updated_at | date:'medium') : 'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="ordersList.length === 0" class="mt-12 p-6 bg-gray-800 rounded-lg shadow-lg text-white text-center border border-gray-700">
+            <p class="text-lg">No orders placed yet. Place an order above to see its status here!</p>
+        </div>
+
+        <div *ngIf="ordersList.length > 0" class="mt-8 text-center">
+            <button (click)="clearAllOrders()"
+                class="text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300">
+                Clear All Orders
+            </button>
+        </div>
     </div>
 </section>

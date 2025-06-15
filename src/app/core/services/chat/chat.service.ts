@@ -23,6 +23,7 @@ interface IChatResponse {
 @Injectable({
   providedIn: 'root'
 })
+
 export default class ChatService {
   private currentChatId: number | null = null;
   private readonly http = inject(HttpClient);
@@ -94,10 +95,10 @@ export default class ChatService {
   }
 
   //! AI chat 
-  sendMessage(message: string): Observable<IChatResponse> {
+  sendMessage(message: string, chatId: string): Observable<IChatResponse> {
     const body = {
       message,
-      chat_id: this.currentChatId ? this.currentChatId.toString() : '',
+      chat_id: chatId,
       temperature: 0.7,
       max_tokens: 8192
     };
