@@ -221,7 +221,6 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
     const msg = this.newMessage.trim();
     this.userChatsService.sendMessage(this.currentChatId, msg).subscribe({
       next: (res) => {
-        // بعد إرسال الرسالة، جلب الرسائل من جديد
         this.userChatsService.getChatFull(this.currentChatId!).subscribe({
           next: (fullRes) => {
             this.messages = (fullRes.messages || []).map((msg: any) => ({

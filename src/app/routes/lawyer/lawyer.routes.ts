@@ -1,3 +1,4 @@
+
 import { Routes } from '@angular/router';
 
 export const lawyerRoutes: Routes = [
@@ -27,8 +28,8 @@ export const lawyerRoutes: Routes = [
       import('../../pages/contact-us/contact-us.component').then(m => m.ContactUsComponent),
   },
   {
-    path: 'payment',
+    path: 'Balance',
     loadComponent: () =>
-      import('../../pages/payment/payment.component').then(m => m.PaymentComponent),
+      import('../../pages/balance/balance.component').then(m => m.BalanceComponent),
   },
 ];

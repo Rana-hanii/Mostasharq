@@ -1,77 +1,146 @@
 <app-nav-sidebar></app-nav-sidebar>
-<!--! details -->
 
 <!--! details -->
-<!--! chat -->
-<div class="p-4 w-[90%] mx-auto">
-    <div class="title mx-40 mt-5 mb-12 flex items-center justify-between border-b-1 border-gray-300 px-2 py-4 ">
-        <div class="flex items-center">
-            <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-                <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
-            <h1 class="text-2xl font-semibold mx-3 text-white">Contact-Us</h1>
+<aside id="sidebar-multi-level-sidebar"
+    class="fixed bottom-0 top-0 left-20 z-40 w-80 mx-2 my-6 transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar">
+    <div class="h-full px-3 py-4  backdrop-blur-lg bg-gray-100/10 rounded-3xl rounded-l-none ">
+        <h2 class="text-3xl  text-white font-semibold mx-3 my-6">Chats</h2>
+        <div class="btn text-center">
+            <button (click)="startNewChat()"
+                [disabled]="isLoading"
+                class="btn bg-gray-900/10 border border-gray-200 px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:bg-red-800/30 hover:scale-105 transition-all duration-300 disabled:opacity-50"
+                type="button">
+                {{ isLoading ? 'Loading...' : 'New Chat' }}
+            </button>
         </div>
-        <div class="icons">
-            <span
-                class="hover:rounded-full hover:shadow-2xl/50 hover:bg-white py-4 px-1 transition-all duration-300 ms-2">
-                <i class="fa-solid fa-gear text-xl text-white px-4 "></i>
-            </span>
+        <div class="history mt-28">
+            <div class="flex items-center justify-between mx-3 mt-10 mb-6">
+                <h3 class="text-xl font-semibold text-white">History</h3>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+
+            <div *ngIf="isLoading" class="text-center py-4 text-white">
+                <p>Loading chat history...</p>
+            </div>
+
+            <div *ngIf="errorMessage" class="text-red-400 text-center py-4 ">
+                {{ errorMessage }}
+            </div>
+
+            <div 
+                *ngIf="!isLoading && !errorMessage"
+                class="chats  shadow-2xl/20 rounded-2xl px-4 mt-4 mx-auto  overflow-y-auto h-[60vh]"
+               >
+                <div *ngFor="let chat of chatHistory"
+                     (click)="getChatDetails(chat.chat_id)"
+                     class="flex items-center   justify-between gap-2 py-4 px-4 font-medium cursor-pointer border border-transparent hover:bg-red-800/20 hover:border  hover:border-red-800/40 rounded-2xl transition-all duration-300">
+                    <div class="flex flex-col">
+                        <span class="text-base text-white font-semibold">{{ chat.chat_title || 'Untitled Chat' }}</span>
+                        <span class="text-xs text-gray-500 mt-1 font-semibold ">
+                            <i class="fa-regular fa-calendar font-semibold"></i>
+                            {{ chat.started_at | date:'dd/MM/yyyy' }}
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span *ngIf="chat.status === 'active'" class="flex items-center gap-1">
+                            <span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+                            <span class="text-green-600 text-xs font-bold">Active</span>
+                        </span>
+                        <span *ngIf="chat.status !== 'active'" class="flex items-center gap-1">
+                            <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+                            <span class="text-red-600 text-xs font-bold">Ended</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="chat mx-40">
-        <div class="p-10 grid grid-cols-1 gap-4 font-medium backdrop-blur-lg bg-gray-100/10 rounded-3xl shadow-2xl/20 h-[80vh]">
-            <div class="response rounded-bl-none bg-gray-900/30 border border-gray-200 text-white p-6 rounded-2xl shadow-2xl/20 w-[45%]">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo voluptatibus commodi, iure
-                    perspiciatis porro.Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo
-                    voluptatibus
-                    commodi, iure
-                    perspiciatis porro.</p>
+</aside>
+
+<!--! chat -->
+<div class="fixed bottom-0 top-0 left-[15.5%]  w-[90%] ">
+  
+    <!--! chat box -->
+    <div class="chat mx-40 relative ">
+        <div class="p-10 font-medium backdrop-blur-lg bg-slate-950/40 rounded-3xl shadow-2xl/20 h-[94.8vh] my-6  ">
+            <div class="msg overflow-y-auto h-[75vh]">
+                <div class="icons flex items-center fixed z-10 left-4  top-4">
+                    <button 
+                        *ngIf="currentChatId"
+                        (click)="endCurrentChat()"
+                        [disabled]="isLoading"
+        
+                        class="group bg-slate-950/40 hover:bg-red-800/40 rounded-2xl  flex items-center justify-start w-14 h-14 text-white relative overflow-hidden transition-all duration-500 cursor-pointer hover:w-48  hover:rounded-lg active:translate-x-1 active:translate-y-1">
+                        <div
+                        class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-7">
+                            <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm5.03 4.72a.75.75 0 0 1 0 1.06l-1.72 1.72h10.94a.75.75 0 0 1 0 1.5H10.81l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                          </svg>
+                    </div>
+                    <div
+                        class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                        End Chat
+                    </div>
+                    </button>
+                </div>
+                <div *ngIf="messages.length === 0" class="flex flex-col items-center justify-center h-[60vh] select-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-white opacity-60 mb-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12c0 4.556-4.694 8.25-9.75 8.25a10.7 10.7 0 0 1-4.248-.86c-.41-.17-.872-.13-1.23.11l-2.12 1.47a.563.563 0 0 1-.868-.602l.57-2.28a1.125 1.125 0 0 0-.11-.81A7.716 7.716 0 0 1 2.25 12c0-4.556 4.694-8.25 9.75-8.25s9.75 3.694 9.75 8.25Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 10.5h.008v.008H8.25V10.5Zm3.75 0h.008v.008H12V10.5Zm3.75 0h.008v.008H15.75V10.5Z" />
+                  </svg>
+                  <span class="text-4xl text-white font-semibold opacity-80">It's Contact Us , How Can I Help You? <p class="text-xl text-gray-300 text-center mt-5 " >Click on new chat to start</p></span>
+                </div>
+                <div *ngFor="let msg of messages" class="message-container px-4 ">
+                    <!-- User Message -->
+                    <div *ngIf="msg.type === 'user'" class="flex justify-end mb-2">
+                        <div class="request rounded-tr-none bg-red-900/50 text-white p-6 rounded-2xl shadow-2xl/50 w-[35%] text-xl ">
+                            {{ msg.content }}
+                        </div>
+                    </div>
+                    <!-- AI Response -->
+                    <div *ngIf="msg.type === 'model'" class="flex justify-start mb-2">
+                        <div class="response rounded-bl-none bg-slate-950/60 boreder border-red-950 text-white p-6 rounded-2xl shadow-2xl w-[45%] text-xl"
+                             [innerHTML]=" msg.content | markdownFormat">
+                        </div>
+                    </div>
+                </div>
+    
+                <!--! Typing indicator as AI message, just above the input -->
+                <div *ngIf="isTyping" class="flex justify-start mb-1">
+                  <div class=" text-slate-900 rounded-2xl px-4 py-2 max-w-[70%] flex items-center typing-indicator">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                  </div>
+                </div>
             </div>
-            <div class="request rounded-tr-none bg-red-900/50  text-white p-6 rounded-2xl shadow-2xl/20 w-[35%] ms-auto">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-            </div>
-            <div class="response rounded-bl-none bg-slate-950  text-white p-6 rounded-2xl shadow-2xl/20 w-[40%]">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quo voluptatibus commodi, iure
-                    perspiciatis porro.</p>
-            </div>
-            <div class="request rounded-tr-none bg-red-900/30 border border-gray-200 text-white p-6 rounded-2xl shadow-2xl/20 w-[45%] ms-auto">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque commodi qui quas aliquam similique
-                    libero.
-                </p>
-            </div>
-            <div class="input mt-8">
-                <form class="flex items-center mx-auto">
+          
+            <div class="input mt-8 absolute  bottom-0 left-0 right-0 px-10 py-5 ">
+                <form (ngSubmit)="sendMessage()" class="flex items-center">
                     <label for="voice-search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <input type="text" id="voice-search"
+                            [(ngModel)]="message"
+                            name="message"
+                            [disabled]="isLoading || !currentChatId"
                             class="backdrop-blur-lg bg-gray-100/10 border border-gray-200 text-white text-sm rounded-3xl block w-full ps-10 p-5"
-                            placeholder="Ask anything..." required />
-                        <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
-                            <svg class="w-4 h-4 text-gray-400 hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z" />
+                            placeholder="{{ currentChatId ? 'Enter your message here...' : 'Please wait while session starts...' }}"
+                            required />
+                        <button type="submit"
+                            [disabled]="isLoading || !currentChatId || !message.trim()"
+                            class="absolute inset-y-0 end-0 flex items-center pe-3 text-sm font-medium text-white bg-gray-900/10 border-l m-2 border-gray-200 rounded-3xl px-6 py-4 shadow-2xl/30 hover:bg-red-800/30 hover:scale-105 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="h-5 w-5 text-white">
+                                <path
+                                    d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
                             </svg>
                         </button>
                     </div>
-                    <button type="submit"
-                        class="inline-flex items-center ms-2 text-sm font-medium text-white bg-gray-900/10 border border-gray-200 rounded-3xl p-5 shadow-2xl/30 hover:bg-red-800/30 hover:scale-105 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="h-5 w-5 text-white">
-                            <path
-                                d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
-                        </svg>
-                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!--! chat -->
+
 <div id="vanta-bg"></div>

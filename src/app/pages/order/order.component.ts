@@ -24,13 +24,14 @@ export class OrderComponent implements OnInit {
   constructor(private fb: FormBuilder, private orderService: OrderService) {
     this.orderForm = this.fb.group({
       description: ['', Validators.required],
-      order_type: ['legal_qa', Validators.required] // Set initial value to 'legal_qa'
+      order_type: ['legal_model', Validators.required] // Set initial value to 'legal_model'
     });
   }
 
   ngOnInit(): void {
     this.loadOrdersReferencesAndFetchStatuses();
   }
+  
 
   private loadOrdersReferencesAndFetchStatuses(): void {
     const storedOrders = localStorage.getItem('savedOrders');

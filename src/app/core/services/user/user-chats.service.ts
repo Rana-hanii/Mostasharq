@@ -53,8 +53,6 @@ export class UserChatsService {
 
   //! chat
   
-
-
   //! send message
   sendMessage(chat_id: number, message: string): Observable<any> {
     return this.http.post(

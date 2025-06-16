@@ -96,7 +96,6 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
           midtoneColor: 0x7f3434,
           lowlightColor: 0x310000,
           baseColor: 0x030712,
-          
           blurFactor: 0.72,
           speed: 3.60,
           zoom: 0.90

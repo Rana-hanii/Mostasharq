@@ -1,5 +1,6 @@
 export type IHistory = Array<{
   chat_id: number;
+  chat_title: string;
   title: string;
   status: string;
   started_at: string;
