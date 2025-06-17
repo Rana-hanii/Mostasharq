@@ -18,6 +18,50 @@
             </div>
         </div>
         <div class="mx-auto max-w-4xl text-center">
+            <h2 class="text-base/7 font-semibold text-red-700">Account</h2>
+            <p class="mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-balance text-white">Your Subscription Details</p>
+        </div>
+        <!-- Message Quota Header -->
+        <div *ngIf="messageQuota && !isQuotaLoading && !quotaError" class="flex justify-center my-8">
+            <div class="flex flex-col items-center gap-2 bg-white/10 border-2 border-red-800 rounded-xl px-6 py-3 shadow-lg">
+                <div class="flex items-center gap-3">
+                    <svg class="w-7 h-7 text-red-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15A2.25 2.25 0 002.25 6.75m19.5 0v.243a2.25 2.25 0 01-.659 1.591l-7.5 7.5a2.25 2.25 0 01-3.182 0l-7.5-7.5A2.25 2.25 0 012.25 6.993V6.75" />
+                    </svg>
+                    <div> <span class="text-lg md:text-xl font-bold text-gray-300">Message Quota:</span>
+                        <span class="text-lg md:text-xl font-bold text-white"> {{ messageQuota.remaining_messages }} </span>
+                        <span class="text-lg md:text-xl font-bold text-gray-300">/</span>
+                        <span class="text-lg md:text-xl font-bold text-white"> {{ messageQuota.total_messages }}</span>
+                    </div>
+                </div>
+                <div class="text-gray-200 font-semibold text-center flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5 text-red-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 2v4M8 2v4M3 10h18" />
+                  </svg>
+                  Expiry Date: <span class="text-red-800">{{ messageQuota.expiry_date | date:'medium' }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- User Subscription Box -->
+        <div class="flex justify-center my-4">
+            <div *ngIf="isSubscriptionLoading" class="text-center text-gray-400 font-semibold">Loading your subscription...</div>
+            <div *ngIf="subscriptionError" class="text-center text-red-600 font-bold">{{ subscriptionError }}</div>
+            <div *ngIf="userSubscription && !isSubscriptionLoading && !subscriptionError" class="flex flex-col items-center gap-2 bg-white/5 border-2 border-red-800 rounded-xl px-6 py-3 shadow-lg min-w-[320px] max-w-full">
+                <div class="flex items-center gap-2 mb-1">
+                    <svg class="w-6 h-6 text-red-800" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span class="text-lg md:text-xl font-bold text-red-800">Current Plan:</span>
+                    <span class="text-lg md:text-xl font-bold text-gray-300 capitalize">{{ userSubscription.plan_name }}</span>
+                </div>
+                <div class="text-gray-300 font-semibold">Price: <span class="text-red-800">{{ userSubscription.price | currency:'EGP':'symbol':'1.0-0' }}</span></div>
+                <div class="text-gray-300 font-semibold">Start: <span class="text-red-800">{{ userSubscription.start_date | date:'mediumDate' }}</span></div>
+                <div class="text-gray-300 font-semibold">End: <span class="text-red-800">{{ userSubscription.end_date | date:'mediumDate' }}</span></div>
+                <div class="text-gray-300 font-semibold">Status: <span class="text-red-800 capitalize">{{ userSubscription.status }}</span></div>
+            </div>
+        </div>
+        <div class="mx-auto max-w-4xl text-center mt-16">
             <h2 class="text-base/7 font-semibold text-red-700">Pricing</h2>
             <p class="mt-2 text-5xl font-semibold tracking-tight text-balance text-white sm:text-6xl">Choose
                 the right
@@ -31,13 +75,14 @@
         <div class="mx-auto mt-16 grid  grid-cols-1 items-center  sm:mt-20 sm:gap-y-0 lg:max-w-6xl lg:grid-cols-3">
             <div
                 class="rounded-3xl rounded-t-3xl bg-white/80 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-tr-none lg:rounded-bl-3xl mx-3 md:mx-0 border border-red-800 my-10">
-                <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-800">Hobby </h3>
+                <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-800">Daily </h3>
                 <p class="mt-4 flex items-baseline gap-x-2">
-                    <span class="text-5xl font-semibold tracking-tight text-gray-900"> EGP 199</span>
-                    <span class="text-base text-gray-500 font-semibold">/month</span>
+                    <span class="text-5xl font-semibold tracking-tight text-gray-900"> EGP 200</span>
+                    <span class="text-base text-gray-500 font-semibold">/ 5 Days</span>
                 </p>
-                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Perfect for users who want to use the chatbot
-                    only, without direct interaction with lawyers</p>
+                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Ideal for quick legal inquiries or trying out
+                    the service.
+                </p>
                 <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10 font-semibold">
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -46,7 +91,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Full access to the AI legal chatbot
+                        50 lawyer chat messages
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -55,7 +100,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Simple and user-friendly interface
+                        Valid for 5 days
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -64,7 +109,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Get answers to general legal questions instantly
+                        Fast response from licensed lawyers
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -73,22 +118,22 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        24-hour support response time
+                        Access via a simple, user-friendly interface
                     </li>
                 </ul>
-                <a href="#" aria-describedby="tier-hobby"
-                    class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-800 ring-1 ring-red-800 ring-inset hover:ring-red-900 hover:bg-red-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10">Get
-                    started today</a>
+                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Perfect for short-term legal needs or urgent
+                    questions.
+                </p>
             </div>
             <div
                 class="relative rounded-3xl bg-slate-950 px-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10 border border-red-800 py-12">
-                <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-500">Premium </h3>
+                <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-500"> Annual Plan</h3>
                 <p class="mt-4 flex items-baseline gap-x-2">
-                    <span class="text-5xl font-semibold tracking-tight text-white">EGP 399</span>
-                    <span class="text-base text-gray-400 font-semibold">/month</span>
+                    <span class="text-5xl font-semibold tracking-tight text-white">EGP 20,000 </span>
+                    <span class="text-base text-gray-400 font-semibold">/ 365 Days</span>
                 </p>
-                <p class="mt-6 text-base/7 text-gray-300 font-semibold">Ideal for users who need occasional access to
-                    real lawyers along with the chatbot service
+                <p class="mt-6 text-base/7 text-gray-300 font-semibold">The best value for those who need consistent and
+                    ongoing legal assistance.
                 </p>
                 <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-300 sm:mt-10 font-semibold ">
                     <li class="flex gap-x-3">
@@ -98,7 +143,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        All Hobby plan features included
+                        8,000 lawyer chat messages
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
@@ -107,7 +152,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        10 lawyer chat sessions per month
+                        Valid for 1 full year
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
@@ -116,7 +161,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Ability to switch between available lawyers
+                        Access to premium legal support anytime
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
@@ -125,7 +170,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Monthly or yearly subscription options
+                        Faster response times from dedicated lawyers
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
@@ -134,31 +179,23 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Quick responses from licensed lawyers
-                    </li>
-                    <li class="flex gap-x-3">
-                        <svg class="h-6 w-5 flex-none text-red-500" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true" data-slot="icon">
-                            <path fill-rule="evenodd"
-                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Custom integrations
+                        All monthly plan features included
                     </li>
                 </ul>
-                <a href="#" aria-describedby="tier-enterprise"
-                    class="mt-8 block rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-white hover:text-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10">Get
-                    started today</a>
+                <p class="mt-6 text-base/7 text-gray-300 font-semibold">Ideal for growing businesses and individuals who
+                    want peace of mind year-round.
+                </p>
             </div>
             <div
                 class="rounded-3xl rounded-t-3xl bg-white/80 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-tr-3xl lg:rounded-tl-none lg:rounded-br-3xl mx-3 md:mx-0 border border-red-800">
-                <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-800">Enterprise</h3>
+                <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-800">Monthly Plan</h3>
                 <p class="mt-4 flex items-baseline gap-x-2">
-                    <span class="text-5xl font-semibold tracking-tight text-gray-900">EGP 699</span>
-                    <span class="text-base text-gray-500 font-semibold">/month</span>
+                    <span class="text-5xl font-semibold tracking-tight text-gray-900">EGP 2,000</span>
+                    <span class="text-base text-gray-500 font-semibold">/ 30 Days</span>
                 </p>
-                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Designed for companies or individuals who
-                    require continuous legal support and unlimited access</p>
+                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">A great choice for individuals who need regular
+                    legal support.
+                </p>
                 <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10 font-semibold">
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -167,7 +204,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Unlimited lawyer chat sessions
+                        650 lawyer chat messages
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -176,7 +213,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Assigned personal legal advisor
+                        Valid for 30 days
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -185,7 +222,7 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Advanced legal consulting and follow-up
+                        Priority lawyer support
                     </li>
                     <li class="flex gap-x-3">
                         <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
@@ -194,12 +231,20 @@
                                 d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Monthly legal reports and summaries
+                        Switch between available lawyers
+                    </li>
+                    <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-red-800" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true" data-slot="icon">
+                            <path fill-rule="evenodd"
+                                d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Fast, reliable answers to your legal questions
                     </li>
                 </ul>
-                <a href="#" aria-describedby="tier-hobby"
-                    class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-800 ring-1 ring-red-800 ring-inset hover:ring-red-900 hover:bg-red-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-10">Get
-                    started today</a>
+                <p class="mt-6 text-base/7 text-zinc-600 font-semibold">Designed for professionals and small businesses.
+                </p>
             </div>
         </div>
     </div>
@@ -257,14 +302,14 @@
                                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
                                 address</label>
                             @if (f['email'].touched && f['email'].errors) {
-                                <div class="text-red-500 text-sm font-semibold mt-1">
-                                    @if (f['email'].errors['required']) {
-                                        <span>Email is required</span>
-                                    }
-                                    @if (f['email'].errors['email']) {
-                                        <span>Please enter a valid email</span>
-                                    }
-                                </div>
+                            <div class="text-red-500 text-sm font-semibold mt-1">
+                                @if (f['email'].errors['required']) {
+                                <span>Email is required</span>
+                                }
+                                @if (f['email'].errors['email']) {
+                                <span>Please enter a valid email</span>
+                                }
+                            </div>
                             }
                         </div>
                         <div class="grid md:grid-cols-2 md:gap-6">
@@ -276,14 +321,14 @@
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
                                     name</label>
                                 @if (f['firstName'].touched && f['firstName'].errors) {
-                                    <div class="text-red-500 text-sm font-semibold mt-1">
-                                        @if (f['firstName'].errors['required']) {
-                                            <span>First name is required</span>
-                                        }
-                                        @if (f['firstName'].errors['minlength']) {
-                                            <span>First name must be at least 2 characters</span>
-                                        }
-                                    </div>
+                                <div class="text-red-500 text-sm font-semibold mt-1">
+                                    @if (f['firstName'].errors['required']) {
+                                    <span>First name is required</span>
+                                    }
+                                    @if (f['firstName'].errors['minlength']) {
+                                    <span>First name must be at least 2 characters</span>
+                                    }
+                                </div>
                                 }
                             </div>
                             <div class="relative z-0 w-full my-6 group">
@@ -294,14 +339,14 @@
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
                                     name</label>
                                 @if (f['lastName'].touched && f['lastName'].errors) {
-                                    <div class="text-red-500 text-sm font-semibold mt-1">
-                                        @if (f['lastName'].errors['required']) {
-                                            <span>Last name is required</span>
-                                        }
-                                        @if (f['lastName'].errors['minlength']) {
-                                            <span>Last name must be at least 2 characters</span>
-                                        }
-                                    </div>
+                                <div class="text-red-500 text-sm font-semibold mt-1">
+                                    @if (f['lastName'].errors['required']) {
+                                    <span>Last name is required</span>
+                                    }
+                                    @if (f['lastName'].errors['minlength']) {
+                                    <span>Last name must be at least 2 characters</span>
+                                    }
+                                </div>
                                 }
                             </div>
                         </div>
@@ -313,60 +358,68 @@
                                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
                                 number (11 digits)</label>
                             @if (f['phone'].touched && f['phone'].errors) {
-                                <div class="text-red-500 text-sm font-semibold mt-1">
-                                    @if (f['phone'].errors['required']) {
-                                        <span>Phone number is required</span>
-                                    }
-                                    @if (f['phone'].errors['pattern']) {
-                                        <span>Phone number must be exactly 11 digits</span>
-                                    }
-                                </div>
+                            <div class="text-red-500 text-sm font-semibold mt-1">
+                                @if (f['phone'].errors['required']) {
+                                <span>Phone number is required</span>
+                                }
+                                @if (f['phone'].errors['pattern']) {
+                                <span>Phone number must be exactly 11 digits</span>
+                                }
+                            </div>
                             }
                         </div>
                         @if (errorMessage) {
-                            <div class="text-red-600 font-bold text-center mt-4">{{ errorMessage }}</div>
+                        <div class="text-red-600 font-bold text-center mt-4">{{ errorMessage }}</div>
                         }
                     </div>
                     <div class="mx-4">
-                        <h3 class="mb-10 text-lg font-medium text-white text-center">Choose the Plan That Fits Your Legal Needs</h3>
+                        <h3 class="mb-10 text-lg font-medium text-white text-center">Choose the Plan That Fits Your
+                            Legal Needs</h3>
                         <ul class="grid w-full gap-6 md:grid-cols-3">
                             <li>
-                                <input type="radio" id="plan-daily" formControlName="plan" value="daily" class="hidden peer" required />
+                                <input type="radio" id="plan-daily" formControlName="plan" value="daily"
+                                    class="hidden peer" required />
                                 <label for="plan-daily"
                                     class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border  border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
                                     <div class="block">
-                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 199</div>
-                                        <div class="w-full text-center">Perfect for users who want to use the chatbot only, without direct interaction with lawyers</div>
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 200</div>
+                                        <div class="w-full text-center">Perfect for quick legal inquiries or trying out
+                                            the service</div>
                                     </div>
                                 </label>
                             </li>
                             <li>
-                                <input type="radio" id="plan-monthly" formControlName="plan" value="monthly" class="hidden peer" required />
+                                <input type="radio" id="plan-monthly" formControlName="plan" value="monthly"
+                                    class="hidden peer" required />
                                 <label for="plan-monthly"
                                     class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
                                     <div class="block">
-                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 399</div>
-                                        <div class="w-full  text-center">For companies or individuals who require continuous legal support and unlimited access</div>
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 2,000</div>
+                                        <div class="w-full  text-center">A great choice for individuals who need regular
+                                            legal support</div>
                                     </div>
                                 </label>
                             </li>
                             <li>
-                                <input type="radio" id="plan-annually" formControlName="plan" value="annually" class="hidden peer" required />
+                                <input type="radio" id="plan-annually" formControlName="plan" value="annually"
+                                    class="hidden peer" required />
                                 <label for="plan-annually"
                                     class="inline-flex items-center justify-between w-full p-5 text-zinc-400 font-semibold border border-gray-200 rounded-lg cursor-pointer hover:bg-red-800 hover:text-zinc-300 peer-checked:bg-red-800 peer-checked:text-zinc-300">
                                     <div class="block">
-                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 699</div>
-                                        <div class="w-full text-center">For companies or individuals who require continuous legal support and unlimited access</div>
+                                        <div class="w-full text-lg font-semibold text-center text-white">EGP 20,000
+                                        </div>
+                                        <div class="w-full text-center">The best value for those who need consistent and
+                                            ongoing legal assistance</div>
                                     </div>
                                 </label>
                             </li>
                         </ul>
                         @if (f['plan'].touched && f['plan'].errors) {
-                            <div class="text-red-500 text-sm font-semibold mt-1">
-                                @if (f['plan'].errors['required']) {
-                                    <span>Please select a plan</span>
-                                }
-                            </div>
+                        <div class="text-red-500 text-sm font-semibold mt-1">
+                            @if (f['plan'].errors['required']) {
+                            <span>Please select a plan</span>
+                            }
+                        </div>
                         }
                     </div>
                 </div>

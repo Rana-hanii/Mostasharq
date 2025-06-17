@@ -29,4 +29,19 @@ export class SubscriptionService {
       { headers: this.getHeaders() }
     );
   }
+
+  getMessageQuota(): Observable<any> {
+    return this.http.get<any>(
+      `${WEBSITE_BASE_URL}users/me/message-quota`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getUserSubscription(): Observable<any> {
+    return this.http.get<any>(
+      `${WEBSITE_BASE_URL}subscriptions`,
+      { headers: this.getHeaders() }
+    );
+  }
+
 }
