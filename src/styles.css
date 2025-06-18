@@ -12,14 +12,13 @@ html, body {
 }
 
 ::-webkit-scrollbar {
-  width: 4px !important;
+  width:2px !important;
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(2,6,24, 0.85); 
-  
   border-radius: 8px;
-  min-height: 20px;
+  min-height: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(2,6,24, 0.85); 

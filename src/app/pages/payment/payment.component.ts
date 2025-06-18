@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { SubscriptionService } from '../../core/services/subscription/subscription.service';
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
 @Component({
   selector: 'app-payment',
-  imports: [ CommonModule, ReactiveFormsModule, NavSidebarComponent],
+  imports: [ CommonModule, ReactiveFormsModule, NavSidebarComponent, RouterModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
@@ -20,6 +21,9 @@ export class PaymentComponent implements OnInit {
   userSubscription: any = null;
   isSubscriptionLoading = false;
   subscriptionError = '';
+  usedMessages = 0;
+  progressPercent = 0;
+  remainingDays = 0;
 
   private readonly fb = inject(FormBuilder);
   private readonly subscriptionService = inject(SubscriptionService);
@@ -68,6 +72,18 @@ export class PaymentComponent implements OnInit {
     this.subscriptionService.getMessageQuota().subscribe({
       next: (data) => {
         this.messageQuota = data;
+        // Calculate used messages and progress
+        if (data && typeof data.total_messages === 'number' && typeof data.remaining_messages === 'number') {
+          this.usedMessages = data.total_messages - data.remaining_messages;
+          this.progressPercent = data.total_messages > 0 ? Math.round((this.usedMessages / data.total_messages) * 100) : 0;
+        }
+        // Calculate remaining days
+        if (data && data.expiry_date) {
+          const expiry = new Date(data.expiry_date);
+          const now = new Date();
+          const diff = expiry.getTime() - now.getTime();
+          this.remainingDays = Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)));
+        }
         this.isQuotaLoading = false;
       },
       error: (err) => {
@@ -95,5 +111,13 @@ export class PaymentComponent implements OnInit {
         this.isSubscriptionLoading = false;
       }
     });
+  }
+
+  getContactUsRoute(): string {
+    const userType = localStorage.getItem('user_type');
+    if (userType === 'company') {
+      return '/company/contact-us';
+    }
+    return '/client/contact-us';
   }
 }
