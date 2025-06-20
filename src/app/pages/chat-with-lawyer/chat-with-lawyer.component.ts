@@ -245,4 +245,10 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
       }
     });
   }
+
+  endCurrentChat() {
+    this.currentChatId = null;
+    this.selectedLawyer = null;
+    this.messages = [];
+  }
 }

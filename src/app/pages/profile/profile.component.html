@@ -31,9 +31,9 @@
     <!-- Main Content Container -->
     <div class="mx-auto mt-16 max-w-7xl px-6 lg:px-8">
         <!-- Profile Photo & User Data Section -->
-        <div class="mb-12 flex flex-col md:flex-row items-center justify-center gap-8">
+        <div class="mb-12 flex flex-col md:flex-row items-center justify-center gap-8 bg-slate-950/50 backdrop-blur-sm border border-red-700/50 rounded-2xl p-6">
             <!--! Profile Photo Upload -->
-            <div class="w-full md:w-2/3 flex flex-col items-center ">
+            <div class="w-full md:w-1/2 flex flex-col items-center ">
                 <label for="profile_image"
                     class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-red-800/20">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -48,8 +48,8 @@
                 </label>
             </div>
             <!--! User Data Display -->
-            <div class="w-full md:w-2/3 bg-transparent rounded-lg  p-6 flex flex-col gap-2 ms-auto">
-                <h3 class="text-lg font-medium text-white mb-4">User Information</h3>
+            <div class="w-full md:w-1/2 bg-transparent rounded-lg  p-6 flex flex-col gap-2 ms-auto">
+                <h3 class="text-lg font-medium text-red-500 mb-4">User Information</h3>
                 <ng-container *ngIf="userProfile; else loadingOrError">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
@@ -82,8 +82,8 @@
 
         <!-- Profile Information Form -->
         <form [formGroup]="profileForm"  class="space-y-8">
-            <div class="bg-slate-900 p-6 rounded-lg border border-gray-700">
-                <h3 class="text-lg font-medium text-white mb-6">Personal Information</h3>
+            <div class="bg-slate-950/50 backdrop-blur-sm border border-red-700/50 rounded-2xl p-6">
+                <h3 class="text-lg font-medium text-red-500 mb-6">Personal Information</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="relative z-0 w-full group">
                         <input type="text" formControlName="first_name" id="first_name"
@@ -164,7 +164,7 @@
                 <!-- Update Info Button -->
                 <div class="mt-6 flex justify-end">
                     <button type="submit" [disabled]="profileForm.invalid || isLoading" (click)="onUpdateUser()"
-                        class="text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                        class="bg-transparent border border-red-700  hover:bg-red-800/40 hover:scale-105 text-white  font-bold rounded-xl text-sm px-5 py-4 text-center transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus:ring-4 focus:outline-none focus:ring-red-300">
                         @if (isLoading) {
                         <span class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent align-middle"></span>
                         <span class="ml-2">Updating...</span>
@@ -177,8 +177,8 @@
             </div>
 
             <!-- Password Change Form -->
-            <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange()" class="bg-slate-900 p-6 rounded-lg border border-gray-700">
-                <h3 class="text-lg font-medium text-white mb-6">Change Password</h3>
+            <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange()" class="bg-slate-950/50 backdrop-blur-sm border border-red-700/50 rounded-2xl p-6">
+                <h3 class="text-lg font-medium text-red-500 mb-6">Change Password</h3>
                 <div class="space-y-6">
                     <div class="relative z-0 w-full group">
                         <input type="password" formControlName="old_password" id="old_password"
@@ -237,7 +237,7 @@
                 <!-- Change Password Button -->
                 <div class="mt-6 flex justify-end">
                     <button type="submit" [disabled]="passwordForm.invalid || isPasswordLoading"
-                        class="text-white bg-red-800 hover:bg-white hover:text-red-800 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        class="bg-transparent border border-red-700  hover:bg-red-800/40 hover:scale-105 text-white  font-bold rounded-xl text-sm px-5 py-4 text-center transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed focus:ring-4 focus:outline-none focus:ring-red-300">
                         @if (isPasswordLoading) {
                         <span class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent align-middle"></span>
                         <span class="ml-2">Updating Password...</span>
@@ -250,8 +250,8 @@
             </form>
 
             <!-- Security Settings -->
-            <div class="bg-slate-900 p-6 rounded-lg border border-gray-700">
-                <h3 class="text-lg font-medium text-white mb-6">Security Settings</h3>
+            <div class="bg-slate-950/50 backdrop-blur-sm border border-red-700/50 rounded-2xl p-6">
+                <h3 class="text-lg font-medium text-red-500 mb-6">Security Settings</h3>
                 <div class="space-y-4">
                     <div class="flex items-center p-4 border border-gray-700 rounded-lg hover:bg-red-800/20">
                         <input type="checkbox" id="two_factor" name="two_factor" value="two_factor"
@@ -274,7 +274,7 @@
             <!-- Delete Account Button -->
             <div class="flex justify-center">
                 <button type="button" (click)="onDeleteAccount()"
-                    class="text-white bg-red-700 hover:bg-red-800 font-bold rounded-lg text-sm px-10 py-2.5 text-center transition-colors duration-300">
+                    class="bg-transparent border border-red-700  hover:bg-red-800/40 hover:scale-105 text-white font-bold rounded-xl text-sm px-24 py-4 text-center transition-all duration-300 focus:ring-4 focus:outline-none focus:ring-red-500 cursor-pointer">
                     Delete Account
                 </button>
             </div>
