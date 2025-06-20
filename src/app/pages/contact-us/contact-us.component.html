@@ -9,7 +9,7 @@
         <div class="btn text-center">
             <button (click)="startNewChat()"
                 [disabled]="isLoading"
-                class="btn bg-gray-900/10 border border-gray-200 px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:bg-red-800/30 hover:scale-105 transition-all duration-300 disabled:opacity-50"
+                class="btn cursor-pointer bg-gray-900/10 border border-gray-200 px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:bg-red-800/30 hover:scale-105 transition-all duration-300 disabled:opacity-50"
                 type="button">
                 {{ isLoading ? 'Loading...' : 'New Chat' }}
             </button>

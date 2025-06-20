@@ -5,35 +5,39 @@
     aria-label="Sidebar">
     <div class="h-full px-3 py-4  backdrop-blur-lg bg-gray-100/10 rounded-3xl rounded-l-none ">
         <h2 class="text-3xl font-medium  text-white mx-3 my-6">Users</h2>
-        <div class=" mt-10 mb-10 flex items-center justify-between flex-col ">
-            <div>
-                @if (isLoadingChats) {
-                  <div class="flex justify-center items-center my-8">
-                    <span class="loader"></span>
-                  </div>
-                }
-                @else {
-                  @for (chat of chats; track chat) {
-                    <div class="lawyer flex items-center justify-between mb-6 rounded-2xl bg-white p-4 shadow-2xl cursor-pointer"
-                         (click)="openChat(chat)">
-                        <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-                            <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="det mx-3">
-                            <div class="flex justify-between items-center">
-                                <h5 class="text-lg font-semibold">{{ chat.participant_name }}</h5>
-                            </div>
-                            <p class="font-medium text-sm">{{ chat.last_message || 'No messages yet' }}</p>
-                        </div>
-                        <p class="mb-auto text-xs font-medium">{{ chat.last_message_time || '' }}</p>
-                    </div>
-                  }
-                }
+        <div *ngIf="isLoadingChats" class="text-center py-4 text-white">
+            <p>Loading chat history...</p>
+        </div>
+        <div *ngIf="chatsError" class="text-red-400 text-center py-4 ">
+            {{ chatsError }}
+        </div>
+        <div 
+            *ngIf="!isLoadingChats && !chatsError"
+            class="chats shadow-2xl/20 rounded-2xl px-4 mt-4 mx-auto overflow-y-auto h-[80vh]"
+        >
+            <div *ngIf="chats.length === 0" class="text-gray-500 text-center my-8">
+                No chats found, start a chat with a user
+            </div>
+            <div *ngFor="let chat of chats"
+                 (click)="openChat(chat)"
+                 class="flex items-center justify-between gap-2 py-4 px-4 font-medium cursor-pointer border border-transparent hover:bg-red-800/20 hover:border hover:border-red-800/40 rounded-2xl transition-all duration-300">
+                <div class="flex flex-col">
+                    <span class="text-base text-white font-semibold">{{ chat.participant_name }}</span>
+                    <span class="text-xs text-gray-500 mt-1 font-semibold ">
+                        <i class="fa-regular fa-calendar font-semibold"></i>
+                        {{ chat.last_message_time ? (chat.last_message_time | date:'dd/MM/yyyy HH:mm') : '' }}
+                    </span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span *ngIf="chat.status === 'active'" class="flex items-center gap-1">
+                        <span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+                        <span class="text-green-600 text-xs font-bold">Active</span>
+                    </span>
+                    <span *ngIf="chat.status !== 'active'" class="flex items-center gap-1">
+                        <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+                        <span class="text-red-600 text-xs font-bold">Ended</span>
+                    </span>
+                </div>
             </div>
         </div>
         <div 
@@ -45,83 +49,82 @@
 </aside>
 <!--! details -->
 <!--! chat -->
-<div class="p-4 sm:ml-80 ">
-    @if (selectedUser && currentChatId) {
-    <div class="chat-box mx-40 mt-5 mb-12 relative">
-        <div class="title flex items-center justify-between border-b border-gray-300 px-2 py-4 ">
-            <div class="flex items-center">
-                <div class="relative w-10 h-10 overflow-hidden bg-gray-400 rounded-full ">
-                    <svg class=" absolute w-8 h-8 bottom-0 right-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <h1 class="text-2xl ms-2 font-semibold">{{ selectedUser.first_name }}</h1>
-            </div>
-            <div class="icons bg-gray-50">
-                <span routerLink="/profile"
-                    class="hover:rounded-full hover:shadow-2xl/50 hover:bg-white py-4 px-1 transition-all duration-300">
-                    <i class="fa-solid fa-pen text-xl text-slate-950 px-4 "></i>
-                </span>
-                <span
-                    class="hover:rounded-full hover:shadow-2xl/50 hover:bg-white py-4 px-1 transition-all duration-300 ms-2">
-                    <i class="fa-solid fa-gear text-xl text-slate-950 px-4 "></i>
-                </span>
-            </div>
+<div class="fixed bottom-0 top-0 left-[15.5%] w-[90%]">
+  <div class="chat mx-40 relative">
+    <div class="p-10 font-medium backdrop-blur-lg bg-slate-950/40 rounded-3xl shadow-2xl/20 h-[94.8vh] my-6">
+      <ng-container *ngIf="selectedUser && currentChatId; else welcomeMsg">
+       
+        <!-- Title/Header -->
+        <div class="flex items-center gap-4 mb-8 pb-4 ">
+          <div class="relative w-12 h-12 flex items-center justify-center rounded-full bg-[#2d090e] border-2 border-red-700">
+            <svg class="w-7 h-7 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold text-white">{{ selectedUser.first_name }}</h2>
+          </div>
         </div>
-        <div class="p-0 font-medium backdrop-blur-lg bg-slate-950/40 rounded-3xl shadow-2xl/20 h-[80vh] my-6 relative">
-            <div class="messages overflow-y-auto pb-40 px-10 pt-10" style="height: calc(100% - 90px);">
-                @if (messages.length === 0) {
-                  <div class="text-gray-400 text-center mt-32">No messages yet</div>
-                }
-                @for (msg of messages; track msg) {
-                  <div 
-                    [ngClass]="msg.is_user ? 'request rounded-tr-none bg-red-900/50 text-white ms-auto w-[35%]' : 'response rounded-bl-none bg-gray-900/30 border border-gray-200 text-white w-[45%]'"
-                    class="p-6 rounded-2xl shadow-2xl/20 mb-2">
-                    <p>{{ msg.content }}</p>
-                  </div>
-                }
-                <!-- Typing indicator as AI message, just above the input -->
-                <div *ngIf="isTyping" class="flex justify-start mb-1">
-                  <div class="bg-gray-200 text-slate-900 rounded-2xl px-4 py-2 max-w-[70%] flex items-center typing-indicator">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                  </div>
-                </div>
+        <!-- /Title/Header -->
+        <div class="msg overflow-y-auto h-[75vh]">
+          <div *ngFor="let msg of messages" class="message-container px-4 ">
+            <!-- User Message -->
+            <div *ngIf="msg.is_user" class="flex justify-end mb-2">
+              <div class="request rounded-tr-none bg-red-900/50 text-white p-6 rounded-2xl shadow-2xl/50 w-[35%] text-xl ">
+                {{ msg.content }}
+              </div>
             </div>
-            <div class="input absolute bottom-0 left-0 right-0 px-10 py-5 backdrop-blur-2xl">
-                <form class="flex items-center mx-auto" (ngSubmit)="sendMessageFromUI()">
-                    <label for="voice-search" class="sr-only">Search</label>
-                    <div class="relative w-full">
-                        <input type="text" id="voice-search"
-                            class="backdrop-blur-lg bg-gray-100/10 border border-gray-100/10 text-white text-sm rounded-3xl block w-full ps-10 p-5"
-                            placeholder="write your message..." required 
-                            [(ngModel)]="newMessage" name="newMessage" />
-                        <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
-                            <svg class="w-4 h-4 text-gray-400 hover:text-white"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z" />
-                            </svg>
-                        </button>
-                    </div>
-                    <button type="submit"
-                        class="inline-flex items-center ms-2 text-sm font-medium text-white bg-gray-900/10 border border-gray-200 rounded-3xl p-5 shadow-2xl/30 hover:bg-red-800/30 hover:scale-105 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="h-5 w-5 text-white">
-                            <path
-                                d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
-                        </svg>
-                    </button>
-                </form>
+            <!-- Lawyer Response -->
+            <div *ngIf="!msg.is_user" class="flex justify-start mb-2">
+              <div class="response rounded-bl-none bg-white/10 border border-gray-50/10 text-white p-6 rounded-2xl shadow-2xl w-[45%] text-xl">
+                {{ msg.content }}
+              </div>
             </div>
+          </div>
+          <!--! Typing indicator as Lawyer message, just above the input -->
+          <div *ngIf="isTyping" class="flex justify-start mb-1">
+            <div class=" text-slate-900 rounded-2xl px-4 py-2 max-w-[70%] flex items-center typing-indicator">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
         </div>
+        <div class="input mt-8 absolute  bottom-0 left-0 right-0 px-10 py-5 ">
+          <form (ngSubmit)="sendMessageFromUI()" class="flex items-center">
+            <label for="voice-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+              <input type="text" id="voice-search"
+                [(ngModel)]="newMessage"
+                name="newMessage"
+                [disabled]="isLoadingChats || !currentChatId"
+                class="backdrop-blur-lg bg-gray-100/10 border border-gray-200 text-white text-sm rounded-3xl block w-full ps-10 p-5"
+                placeholder="{{ currentChatId ? 'Enter your message here...' : 'Please wait while session starts...' }}"
+                required />
+              <button type="submit"
+                [disabled]="isLoadingChats || !currentChatId || !newMessage.trim()"
+                class="absolute inset-y-0 end-0 flex items-center pe-3 text-sm font-medium text-white bg-gray-900/10 border-l m-2 border-gray-200 rounded-3xl px-6 py-4 shadow-2xl/30 hover:bg-red-800/30 hover:scale-105 transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                  class="h-5 w-5 text-white">
+                  <path
+                    d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </ng-container>
+      <ng-template #welcomeMsg>
+        <div class="flex flex-col items-center justify-center h-full select-none">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-white opacity-60 mb-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12c0 4.556-4.694 8.25-9.75 8.25a10.7 10.7 0 0 1-4.248-.86c-.41-.17-.872-.13-1.23.11l-2.12 1.47a.563.563 0 0 1-.868-.602l.57-2.28a1.125 1.125 0 0 0-.11-.81A7.716 7.716 0 0 1 2.25 12c0-4.556 4.694-8.25 9.75-8.25s9.75 3.694 9.75 8.25Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 10.5h.008v.008H8.25V10.5Zm3.75 0h.008v.008H12V10.5Zm3.75 0h.008v.008H15.75V10.5Z" />
+          </svg>
+          <span class="text-3xl text-white font-semibold opacity-80 text-center">Select a user from the list to start a conversation</span>
+        </div>
+      </ng-template>
     </div>
-    }
+  </div>
 </div>
 <!--! chat -->
 <div id="vanta-bg"></div>
