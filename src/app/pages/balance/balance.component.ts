@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { LawyerService } from '../../core/services/lawyer/lawyer.service';
 import { NavSidebarComponent } from '../../shared/components/nav-sidebar/nav-sidebar.component';
 
@@ -30,7 +31,7 @@ export class BalanceComponent implements OnInit {
   isLoading: boolean = false;
   withdrawForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private lawyerService: LawyerService) {
+  constructor(private fb: FormBuilder, private lawyerService: LawyerService, private toastr: ToastrService) {
     this.withdrawForm = this.fb.group({
       phone: [
         '',
@@ -67,6 +68,7 @@ export class BalanceComponent implements OnInit {
           ]);
       },
       error: (error) => {
+        this.toastr.error('Failed to load balance.', 'Error');
         console.error('Error loading balance:', error);
       },
     });
@@ -79,6 +81,7 @@ export class BalanceComponent implements OnInit {
         this.transactions = response;
       },
       error: (error) => {
+        this.toastr.error('Failed to load transactions.', 'Error');
         console.error('Error loading transactions:', error);
       },
     });
@@ -106,12 +109,16 @@ export class BalanceComponent implements OnInit {
           this.closeWithdrawModal();
           this.loadBalance();
           this.loadTransactions();
+          this.toastr.success('Withdrawal request submitted successfully!', 'Success');
         },
         error: (error) => {
           this.isLoading = false;
+          this.toastr.error('Failed to process withdrawal.', 'Error');
           console.error('Error processing withdrawal:', error);
         },
       });
+    } else {
+      this.toastr.info('Please fill out all required fields correctly.', 'Info');
     }
   }
 

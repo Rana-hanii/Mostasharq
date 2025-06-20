@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SubscriptionService } from '../../core/services/subscription/subscription.service';
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
@@ -27,6 +28,7 @@ export class PaymentComponent implements OnInit {
 
   private readonly fb = inject(FormBuilder);
   private readonly subscriptionService = inject(SubscriptionService);
+  private readonly toastr = inject(ToastrService);
 
   ngOnInit(): void {
     this.paymentForm = this.fb.group({
@@ -36,8 +38,7 @@ export class PaymentComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
       plan: [null, [Validators.required]]
     });
-    this.fetchMessageQuota();
-    this.fetchUserSubscription();
+    this.refreshSubscriptionData();
   }
 
   get f() { return this.paymentForm.controls; }
@@ -46,6 +47,7 @@ export class PaymentComponent implements OnInit {
     if (this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
       this.errorMessage = 'Please fill all fields correctly.';
+      this.toastr.error(this.errorMessage, 'Error');
       return;
     }
     this.isLoading = true;
@@ -56,12 +58,16 @@ export class PaymentComponent implements OnInit {
       next: (res) => {
         this.isLoading = false;
         if (res.payment_url) {
+          this.toastr.success('Redirecting to payment gateway...', 'Success');
           window.open(res.payment_url, '_blank');
+        } else {
+          this.toastr.error('Payment URL not found.', 'Error');
         }
       },
       error: (err) => {
         this.isLoading = false;
         this.errorMessage = err.error?.message || 'Payment initiation failed.';
+        this.toastr.error(this.errorMessage, 'Error');
       }
     });
   }
@@ -87,8 +93,14 @@ export class PaymentComponent implements OnInit {
         this.isQuotaLoading = false;
       },
       error: (err) => {
-        this.quotaError = 'Failed to load message quota.';
+        // إذا لم يكن المستخدم مسجلاً أو لم يجد الكوتا
+        if (err.status === 401 || err.status === 404) {
+          this.quotaError = 'Please select a plan from below to start your subscription.';
+        } else {
+          this.quotaError = 'Failed to load message quota.';
+        }
         this.isQuotaLoading = false;
+        this.toastr.info(this.quotaError, 'Info');
       }
     });
   }
@@ -104,13 +116,26 @@ export class PaymentComponent implements OnInit {
         } else {
           this.userSubscription = data;
         }
+        // إذا كان الاشتراك نشطاً، اعتبر المستخدم قد دفع
+        if (this.userSubscription && this.userSubscription.status === 'active') {
+          localStorage.setItem('hasPaid', 'true');
+        } else {
+          localStorage.removeItem('hasPaid');
+        }
         this.isSubscriptionLoading = false;
       },
       error: (err) => {
         this.subscriptionError = 'Failed to load subscription.';
         this.isSubscriptionLoading = false;
+        this.toastr.error(this.subscriptionError, 'Error');
+        localStorage.removeItem('hasPaid');
       }
     });
+  }
+
+  refreshSubscriptionData() {
+    this.fetchMessageQuota();
+    this.fetchUserSubscription();
   }
 
   getContactUsRoute(): string {

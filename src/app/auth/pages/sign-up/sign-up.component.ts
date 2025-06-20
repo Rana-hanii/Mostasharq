@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 
 interface ISuccess {
@@ -39,6 +40,7 @@ export class SignUpComponent {
   private readonly router = inject(Router);
   private readonly _formGroup = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly toastr = inject(ToastrService);
 
   ngOnInit(): void {
     this.initSignUpForm();
@@ -100,6 +102,7 @@ export class SignUpComponent {
           console.log(res);
           this.signupForm.reset();
           this.isLoading = false;
+          this.toastr.success('Account created successfully! You can now log in.', 'Success');
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, 1500);
@@ -108,7 +111,20 @@ export class SignUpComponent {
           this.isLoading = false;
           console.log(err.error);
           console.log(err.error.message);
-          this.errorMessage = err.error.message;
+          // Check for duplicate email error in both message and detail
+          const errorMsg = (typeof err.error.message === 'string' ? err.error.message.toLowerCase() : '') +
+                           (typeof err.error.detail === 'string' ? err.error.detail.toLowerCase() : '');
+          if (errorMsg.includes('email already registered') || errorMsg.includes('duplicate') || errorMsg.includes('email used')) {
+            this.toastr.error('This email is already registered.', 'Sign Up Failed');
+          } else if (
+            err.status === 409 ||
+            errorMsg.includes('already exists') ||
+            errorMsg.includes('used')
+          ) {
+            this.toastr.error('This email or phone number is already registered.', 'Sign Up Failed');
+          } else {
+            this.toastr.error('Something went wrong. Please try again later.', 'Error');
+          }
         },
       });
     }

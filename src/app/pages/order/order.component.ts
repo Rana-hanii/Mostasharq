@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { OrderPayload, OrderService } from '../../core/services/company/order.service';
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
@@ -21,7 +22,7 @@ export class OrderComponent implements OnInit {
   ordersList: any[] = []; // To store full details of all fetched orders
   orderFormSubmitted: boolean = false; // To track if the main order form has been submitted
 
-  constructor(private fb: FormBuilder, private orderService: OrderService) {
+  constructor(private fb: FormBuilder, private orderService: OrderService, private toastr: ToastrService) {
     this.orderForm = this.fb.group({
       description: ['', Validators.required],
       order_type: ['legal_model', Validators.required] // Set initial value to 'legal_model'
@@ -79,8 +80,8 @@ export class OrderComponent implements OnInit {
       },
       error: (statusError) => {
         console.error(`Error fetching order status for Order ID ${orderId}:`, statusError);
-        // Optionally, add a placeholder or error message to the list
         this.ordersList.push({ order_id: orderId, status: 'error', errorMessage: 'Failed to load details' });
+        this.toastr.error('Failed to fetch order status.', 'Error');
       }
     });
   }
@@ -100,7 +101,7 @@ export class OrderComponent implements OnInit {
       this.orderService.Order(payload).subscribe({
         next: (response) => {
           console.log('Order placed successfully:', response);
-          alert('Order placed successfully!');
+          this.toastr.success('Order placed successfully!', 'Success');
           this.orderForm.reset();
           this.orderFormSubmitted = false; // Reset after successful submission and reset
 
@@ -113,12 +114,12 @@ export class OrderComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error placing order:', error);
-          alert('Failed to place order. Please try again.');
+          this.toastr.error('Failed to place order. Please try again.', 'Error');
           this.orderFormSubmitted = false; // Reset on error
         }
       });
     } else {
-      alert('Please fill out all required fields.');
+      this.toastr.info('Please fill out all required fields.', 'Info');
       this.orderFormSubmitted = false; // Reset if form is invalid
     }
   }

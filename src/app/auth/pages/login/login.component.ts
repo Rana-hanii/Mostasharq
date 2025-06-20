@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ILoginSucc } from '../../interfaces/ilogin-succ';
 import { AuthService } from '../../services/auth.service';
 
@@ -29,13 +30,12 @@ export class LoginComponent {
   //! variables
   loginForm!: FormGroup;
   isLoading = false;
-  successMessage = '';
-  errorMessage = '';
 
   //! Injections
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly toastr = inject(ToastrService);
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -59,7 +59,7 @@ export class LoginComponent {
       this.authService.sendLogin(formData).subscribe({
         next: (res: ILoginSucc) => {
           console.log(res);
-          this.successMessage = 'Login successful';
+          this.toastr.success('Login successful');
           this.loginForm.reset();
           this.isLoading = false;
           localStorage.setItem('token', res.access_token);
@@ -81,7 +81,18 @@ export class LoginComponent {
           this.isLoading = false;
           console.log(err.error);
           console.log(err.error.message);
-          this.errorMessage = err.error.message;
+          // Check for invalid credentials
+          if (
+            err.status === 401 ||
+            (typeof err.error.message === 'string' &&
+              (err.error.message.toLowerCase().includes('invalid') ||
+               err.error.message.toLowerCase().includes('incorrect') ||
+               err.error.message.toLowerCase().includes('not found')))
+          ) {
+            this.toastr.error('Invalid email or password.', 'Login Failed');
+          } else {
+            this.toastr.error('Something went wrong. Please try again later.', 'Error');
+          }
         },
       });
     }
@@ -89,8 +100,6 @@ export class LoginComponent {
 
   handleSubmit() {
     this.loginForm.markAllAsTouched();
-    this.successMessage = '';
-    this.errorMessage = '';
   }
 
   navigateToSignUp() {

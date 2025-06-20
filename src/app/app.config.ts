@@ -12,6 +12,9 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,8 +25,9 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions(),
       withHashLocation()
     ),
-
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
+    provideToastr(), 
+    provideAnimations(), 
   ],
 };

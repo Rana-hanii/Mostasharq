@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { IHistory } from '../../core/interfaces/IHistory';
 import { ContactUsService } from '../../core/services/contact-us/contact-us.service';
 import { MarkdownFormatPipe } from '../../pipes/markdown-format.pipe';
@@ -24,6 +25,7 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
   private vantaEffect: any = null;
   private readonly ngZone = inject(NgZone);
   private readonly contactUsService = inject(ContactUsService);
+  private readonly toastr = inject(ToastrService);
 
   // State Variables
   chatHistory: IHistory | null = null;
@@ -118,11 +120,11 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
         this.chatHistory = history;
         this.isLoading = false;
         console.log('Chat history loaded:', history);
-        
       },
       error: (error: any) => {
         this.errorMessage = error.error?.detail || 'Failed to load chat history';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error loading chat history:', error);
       }
     });
@@ -139,12 +141,14 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentChatId = response.chat_id;
         this.isLoading = false;
         this.messages = []; // Clear messages for new chat
+        this.toastr.success('New chat started! You can now send your message.', 'Success');
         console.log('New chat started:', response);
         this.loadChatHistory(); // Reload history after new chat
       },
       error: (error: any) => {
         this.errorMessage = error.error?.detail || 'Failed to start new chat';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error starting new chat:', error);
       }
     });
@@ -153,6 +157,7 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
   sendMessage(): void {
     if (this.message.trim() === '' || !this.currentChatId) {
       this.errorMessage = 'Please enter a message or wait for the session to start.';
+      this.toastr.info(this.errorMessage, 'Info');
       return;
     }
 
@@ -164,11 +169,13 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
         console.log('Message sent successfully:', response);
         this.message = ''; // Clear message input
         this.isLoading = false;
+        this.toastr.success('Message sent successfully!', 'Success');
         this.getChatDetails(this.currentChatId!); // Refresh chat details after sending message
       },
       error: (error: any) => {
         this.errorMessage = error.error?.detail || 'Failed to send message.';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error sending message:', error);
       }
     });
@@ -191,6 +198,7 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
       error: (error: any) => {
         this.errorMessage = error.error?.message || 'Failed to load chat details';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error loading chat details:', error);
       }
     });
@@ -205,7 +213,7 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
     this.contactUsService.endChat(this.currentChatId).subscribe({ // Assuming endChat API exists and works
       next: (res: any) => {
         this.isLoading = false;
-        console.log('Chat ended successfully');
+        this.toastr.success('Chat ended successfully.', 'Success');
         this.loadChatHistory(); // Reload history after ending chat
         this.currentChatId = null;
         this.messages = []; // Clear current chat messages
@@ -213,6 +221,7 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
       error: (err: any) => {
         this.errorMessage = err.error?.message || 'Failed to end chat';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error ending chat:', err);
         alert(this.errorMessage);
       }

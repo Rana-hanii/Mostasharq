@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { IHistory } from '../../core/interfaces/IHistory';
 import ChatService from '../../core/services/chat/chat.service';
 import { MarkdownFormatPipe } from '../../pipes/markdown-format.pipe';
 import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
 import { NavSidebarComponent } from '../../shared/components/nav-sidebar/nav-sidebar.component';
-import { response } from 'express';
 
 interface ChatMessage {
   type: 'user' | 'model';
@@ -28,6 +28,7 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly _FixflowbiteService = inject(FixflowbiteService);
   private readonly chatService = inject(ChatService);
   private readonly ngZone = inject(NgZone);
+  private readonly toastr = inject(ToastrService);
 
   // State Variables
   chatHistory: IHistory | null = null;
@@ -131,6 +132,7 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
       error: (error) => {
         this.errorMessage = error.error?.detail || 'Failed to load chat history';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error loading chat history:', error);
       }
     });
@@ -147,12 +149,14 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentChatId = response.chat_id.toString();
         this.isLoading = false;
         this.messages = []; // Clear messages for new chat
+        this.toastr.success('New chat started! You can now send your questions.', 'Success');
         console.log('New chat started:', response);
         this.loadChatHistory();
       },
       error: (error) => {
         this.errorMessage = error.error?.detail || 'Failed to start new chat';
         this.isLoading = false;
+        this.toastr.error(this.errorMessage, 'Error');
         console.error('Error starting new chat:', error);
         console.log(error)
       }
@@ -177,11 +181,18 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
             content: response.response
           });
           this.isTyping = false;
+          this.toastr.success('Message sent successfully!', 'Success');
         },
         error: (error) => {
           this.isTyping = false;
+          const msg = error.error?.detail || 'Failed to send message. Please try again.';
+          this.toastr.error(msg, 'Error');
         }
       });
+    } else if (!this.currentChatId) {
+      this.toastr.info('Please start a new chat before sending messages.', 'Info');
+    } else if (!this.message.trim()) {
+      this.toastr.info('Please enter a message before sending.', 'Info');
     }
   }
 
@@ -203,6 +214,7 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       error: (error) => {
         this.errorMessage = error.error?.message || 'Failed to load chat details';
+        this.toastr.error(this.errorMessage, 'Error');
         this.isLoading = false;
         console.error('Error loading chat details:', error);
       }
@@ -218,15 +230,16 @@ export class ChatAiComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chatService.endChat(Number(this.currentChatId)).subscribe({
       next: (res) => {
         this.isLoading = false;
-        console.log('Chat ended successfully');
+        this.toastr.success('Chat ended successfully.', 'Success');
         this.loadChatHistory();
         this.currentChatId = null;
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Failed to end chat';
+        this.toastr.error(this.errorMessage, 'Error');
         this.isLoading = false;
         console.error('Error ending chat:', err);
-        alert(this.errorMessage);
+        // alert(this.errorMessage);
       }
     });
   }

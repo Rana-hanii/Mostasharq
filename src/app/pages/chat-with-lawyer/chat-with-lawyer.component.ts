@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { NavSidebarComponent } from '../../shared/components/nav-sidebar/nav-sidebar.component';
 import { Ilawyer } from './../../core/interfaces/ILawyer';
 import { UserChatsService } from './../../core/services/user/user-chats.service';
@@ -18,6 +19,7 @@ declare var THREE: any;
 export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy {
   private vantaEffect: any = null;
   private readonly ngZone = inject(NgZone);
+  private readonly toastr = inject(ToastrService);
   showModal = false;
   selectedGovernorate: string = '';
   governorates: string[] = [];
@@ -38,7 +40,10 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
 
   isTyping: boolean = false;
 
+  hasPaid = false;
+
   ngOnInit() {
+    this.hasPaid = localStorage.getItem('hasPaid') === 'true';
     this.getGovernorates();
     this.getChats();
   }
@@ -122,6 +127,7 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
       },
       error: (err: any) => {
         console.log(err);
+        this.toastr.error('Failed to load governorates.', 'Error');
       },
     });
   }
@@ -138,6 +144,7 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
         },
         error: (err: any) => {
           console.log(err);
+          this.toastr.error('Failed to load lawyers for this governorate.', 'Error');
         },
       });
   }
@@ -155,6 +162,10 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
 
   //! start chat with lawyer
   startChatWithLawyer(lawyer: Ilawyer) {
+    if (!this.hasPaid) {
+      this.toastr.info('You must complete the payment before starting a chat with a lawyer.', 'Payment Required');
+      return;
+    }
     this.userChatsService.chooseLawyer(lawyer.user_id).subscribe({
       next: (res) => {
         console.log(res);
@@ -165,9 +176,17 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
         };
         this.messages = res.messages || [];
         this.closeModal();
+        this.toastr.success('Chat started with lawyer successfully!', 'Success');
       },
       error: (err) => {
         console.error(err);
+        // إذا كان الخطأ بسبب انتهاء الرسائل أو عدم وجود رصيد
+        const detail = err?.error?.detail?.toLowerCase() || '';
+        if (err.status === 403 && detail.includes('no remaining messages')) {
+          this.toastr.error('You have no remaining messages. Please purchase or renew your subscription to start a new chat.', 'Payment Required');
+        } else {
+          this.toastr.error('Failed to start chat with lawyer.', 'Error');
+        }
       }
     });
   }
@@ -186,6 +205,7 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
         this.chats = [];
         this.isLoadingChats = false;
         this.chatsError = 'error in get chats';
+        this.toastr.error('Failed to load chats.', 'Error');
       }
     });
   }
@@ -212,12 +232,20 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
       },
       error: (err) => {
         this.messages = [];
+        this.toastr.error('Failed to load chat messages.', 'Error');
       }
     });
   }
 
   sendMessageFromUI() {
-    if (!this.currentChatId || !this.newMessage.trim()) return;
+    if (!this.currentChatId) {
+      this.toastr.info('Please select or start a chat before sending messages.', 'Info');
+      return;
+    }
+    if (!this.newMessage.trim()) {
+      this.toastr.info('Please enter a message before sending.', 'Info');
+      return;
+    }
     const msg = this.newMessage.trim();
     this.userChatsService.sendMessage(this.currentChatId, msg).subscribe({
       next: (res) => {
@@ -228,6 +256,7 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
               is_user: msg.role === 'user',
               time: msg.timestamp
             }));
+            this.toastr.success('Message sent successfully!', 'Success');
           },
           error: () => {
             this.messages.push({
@@ -235,12 +264,13 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
               is_user: true,
               time: new Date().toISOString()
             });
+            this.toastr.warning('Message sent, but failed to refresh chat.', 'Warning');
           }
         });
         this.newMessage = '';
       },
       error: (err) => {
-      
+        this.toastr.error('Failed to send message.', 'Error');
         console.error(err);
       }
     });

@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../auth/services/auth.service';
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 
@@ -45,6 +46,7 @@ export class ProfileComponent implements OnInit {
   // !services
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly toastr = inject(ToastrService);
 
 
   ngOnInit(): void {
@@ -135,10 +137,12 @@ export class ProfileComponent implements OnInit {
           this.isLoading = false;
           this.profileForm.reset();
           this.getUserData();
+          this.toastr.success('Profile updated successfully!', 'Success');
         },
         error: (err: any) => {  
           this.errorMessage = err.error?.message || 'Failed to update user';
           this.isLoading = false;
+          this.toastr.error(this.errorMessage, 'Error');
           console.error('Error updating user:', err);
         },
       });
@@ -157,10 +161,12 @@ export class ProfileComponent implements OnInit {
           console.log('Password changed successfully:', res);
           this.isPasswordLoading = false;
           this.passwordForm.reset();
+          this.toastr.success('Password changed successfully!', 'Success');
         },
         error: (err: any) => {
           this.errorMessage = err.error?.message || 'Failed to change password';
           this.isPasswordLoading = false;
+          this.toastr.error(this.errorMessage, 'Error');
           console.error('Error changing password:', err);
         },
       });
@@ -181,11 +187,13 @@ export class ProfileComponent implements OnInit {
           console.log('Account deleted successfully');
           localStorage.removeItem('token');
           localStorage.removeItem('user_id');
+          this.toastr.success('Account deleted successfully!', 'Success');
           // Redirect to login or home page
         },
         error: (err: any) => {
           this.errorMessage = err.error?.message || 'Failed to delete account';
           this.isLoading = false;
+          this.toastr.error(this.errorMessage, 'Error');
           console.error('Error deleting account:', err);
         },
       });

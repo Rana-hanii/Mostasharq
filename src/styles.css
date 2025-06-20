@@ -32,3 +32,42 @@ html {
   scrollbar-width: thin;
   scrollbar-color: rgba(2,6,24,0.85) transparent;
 }
+
+/* تخصيص لون خلفية جميع أنواع التوستار */
+.toast-success, .toast-error, .toast-info, .toast-warning {
+  background-color: #020617 !important; /* slate-950 */
+  color: #fff !important; /* لون الخط أبيض */
+  border-radius: 0.5rem !important; /* زوايا دائرية */
+  box-shadow: 0 2px 16px 0 #991b1b !important; /* ظل أحمر غامق */
+}
+
+/* تخصيص لون النص داخل التوستار */
+.toast-success .toast-message,
+.toast-error .toast-message,
+.toast-info .toast-message,
+.toast-warning .toast-message {
+  color: #fff !important;
+}
+
+/* تخصيص لون الأيقونة حسب نوع التوستار */
+.toast-success .toast-icon {
+  color: #22c55e !important; /* أخضر - Tailwind green-500 */
+}
+.toast-error .toast-icon {
+  color: #ef4444 !important; /* أحمر - Tailwind red-500 */
+}
+.toast-warning .toast-icon {
+  color: #f59e42 !important; /* أصفر/برتقالي - Tailwind amber-500 */
+}
+.toast-info .toast-icon {
+  color: #3b82f6 !important; /* أزرق - Tailwind blue-500 */
+}
+
+/* إذا لم تظهر الأيقونة ملونة، جرب أيضاً: */
+.toast-success .toast-icon svg,
+.toast-error .toast-icon svg,
+.toast-warning .toast-icon svg,
+.toast-info .toast-icon svg {
+  fill: currentColor !important;
+  color: inherit !important;
+}

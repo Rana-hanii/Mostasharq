@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserChatsService } from '../../core/services/user/user-chats.service';
 import { NavSidebarComponent } from "../../shared/components/nav-sidebar/nav-sidebar.component";
 import { LawyerService } from './../../core/services/lawyer/lawyer.service';
@@ -18,6 +19,7 @@ declare var THREE: any;
 export class ChatLaywersWithUsersComponent implements OnInit, AfterViewInit, OnDestroy {
   private vantaEffect: any = null;
   private readonly ngZone = inject(NgZone);
+  private readonly toastr = inject(ToastrService);
   chats: any[] = [];
   selectedUser: any = null;
   currentChatId: number | null = null;
@@ -116,6 +118,7 @@ export class ChatLaywersWithUsersComponent implements OnInit, AfterViewInit, OnD
         this.chats = [];
         this.isLoadingChats = false;
         this.chatsError = 'error in get chats';
+        this.toastr.error('Failed to load chats.', 'Error');
       }
     });
   }
@@ -136,12 +139,16 @@ export class ChatLaywersWithUsersComponent implements OnInit, AfterViewInit, OnD
       },
       error: () => {
         this.messages = [];
+        this.toastr.error('Failed to load chat messages.', 'Error');
       }
     });
   }
 
   sendMessageFromUI() {
-    if (!this.currentChatId || !this.newMessage.trim()) return;
+    if (!this.currentChatId || !this.newMessage.trim()) {
+      this.toastr.info('Please enter a message before sending.', 'Info');
+      return;
+    }
     const msg = this.newMessage.trim();
     this.lawyerService.sendMessage(this.currentChatId, msg).subscribe({
       next: () => {
@@ -152,6 +159,7 @@ export class ChatLaywersWithUsersComponent implements OnInit, AfterViewInit, OnD
               is_user: msg.role === 'lawyer',
               time: msg.timestamp
             }));
+            this.toastr.success('Message sent successfully!', 'Success');
           },
           error: () => {
             this.messages.push({
@@ -159,11 +167,13 @@ export class ChatLaywersWithUsersComponent implements OnInit, AfterViewInit, OnD
               is_user: true,
               time: new Date().toISOString()
             });
+            this.toastr.warning('Message sent, but failed to refresh chat.', 'Warning');
           }
         });
         this.newMessage = '';
       },
       error: (err) => {
+        this.toastr.error('Failed to send message.', 'Error');
         console.error(err);
       }
     });
