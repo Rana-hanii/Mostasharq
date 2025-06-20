@@ -42,6 +42,35 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
 
   hasPaid = false;
 
+  formatDate(dateString: string): string {
+    if (!dateString) {
+      return '';
+    }
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return dateString; // Return original string if not a valid date
+    }
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const messageDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+    const time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+    if (messageDate.getTime() === today.getTime()) {
+      return `Today, ${time}`;
+    } else if (messageDate.getTime() === yesterday.getTime()) {
+      return `Yesterday, ${time}`;
+    } else {
+      const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      return `${formattedDate}, ${time}`;
+    }
+  }
+
   ngOnInit() {
     this.hasPaid = localStorage.getItem('hasPaid') === 'true';
     this.getGovernorates();

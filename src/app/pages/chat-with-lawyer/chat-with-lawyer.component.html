@@ -40,7 +40,7 @@
                         <span class="text-base text-white font-semibold">{{ chat.participant_name }}</span>
                         <span class="text-xs text-gray-500 mt-1 font-semibold ">
                             <i class="fa-regular fa-calendar font-semibold"></i>
-                            {{ chat.last_message_time || '' }}
+                            {{ formatDate(chat.last_message_time) }}
                         </span>
                     </div>
                     <div class="flex items-center gap-2">
@@ -139,6 +139,18 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+} @else {
+<div class="fixed bottom-0 top-0 left-[15.5%] w-[90%]">
+    <div class="chat mx-40 relative">
+        <div class="p-10 font-medium backdrop-blur-lg bg-slate-950/40 rounded-3xl shadow-2xl/20 h-[94.8vh] my-6 flex flex-col items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-white opacity-60 mb-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12c0 4.556-4.694 8.25-9.75 8.25a10.7 10.7 0 0 1-4.248-.86c-.41-.17-.872-.13-1.23.11l-2.12 1.47a.563.563 0 0 1-.868-.602l.57-2.28a1.125 1.125 0 0 0-.11-.81A7.716 7.716 0 0 1 2.25 12c0-4.556 4.694-8.25 9.75-8.25s9.75 3.694 9.75 8.25Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 10.5h.008v.008H8.25V10.5Zm3.75 0h.008v.008H12V10.5Zm3.75 0h.008v.008H15.75V10.5Z" />
+              </svg>
+              <span class="text-4xl text-white font-semibold opacity-80">It's Chat With Lawyer , How Can I Help You? <p class="text-xl text-gray-300 text-center mt-5 " >Start a chat to begin</p></span>
         </div>
     </div>
 </div>
