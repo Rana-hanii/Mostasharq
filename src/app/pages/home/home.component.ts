@@ -11,7 +11,9 @@ import {
   PLATFORM_ID,
   ViewChild
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import ChatService from '../../core/services/chat/chat.service';
 import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
 
 
@@ -25,7 +27,7 @@ declare global {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -33,6 +35,7 @@ declare global {
 export class HomeComponent implements AfterViewInit, OnDestroy {
 
    readonly _FixflowbiteService = inject(FixflowbiteService)
+   private readonly _chatService = inject(ChatService);
    visible: boolean = false;
 
    showDialog() {
@@ -53,6 +56,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('vantaContainer', { static: false }) vantaContainer?: ElementRef;
 
   isModalOpen = false;
+
+  // Chat properties
+  messages: { content: string; role: 'user' | 'ai' }[] = [];
+  userMessage: string = '';
+  userMessageCount: number = 0;
+  chatId: string = '1';
+  isLoading: boolean = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -292,5 +302,29 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   closeModal() {
     this.isModalOpen = false;
+  }
+
+  sendMessage() {
+    if (!this.userMessage.trim() || !this.chatId || this.userMessageCount >= 3) {
+      return;
+    }
+
+    this.isLoading = true;
+    const userMsg = this.userMessage;
+    this.messages.push({ content: userMsg, role: 'user' });
+    this.userMessage = '';
+    this.userMessageCount++;
+
+    this._chatService.sendMessage(userMsg, this.chatId).subscribe({
+      next: (response: any) => {
+        this.messages.push({ content: response.response, role: 'ai' });
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error('Error sending message', err);
+        this.messages.push({ content: 'Sorry, something went wrong. Please try again later.', role: 'ai' });
+        this.isLoading = false;
+      }
+    });
   }
 }

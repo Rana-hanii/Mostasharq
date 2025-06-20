@@ -103,10 +103,19 @@ export default class ChatService {
       max_tokens: 8192
     };
     
+    const token = localStorage.getItem('token');
+    let headers = this.getHeaders();
+
+    if (!token) {
+        // If there is no token, we assume it's a guest user.
+        // Let's remove the Authorization header for this request.
+        headers = headers.delete('Authorization');
+    }
+
     return this.http.post<IChatResponse>(
       `${WEBSITE_BASE_URL}chatttt`,
       body,
-      { headers: this.getHeaders() }
+      { headers: headers }
     );
   }
 
