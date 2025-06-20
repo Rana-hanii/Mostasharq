@@ -118,6 +118,7 @@ export class ContactUsComponent implements AfterViewInit, OnDestroy, OnInit {
         this.chatHistory = history;
         this.isLoading = false;
         console.log('Chat history loaded:', history);
+        
       },
       error: (error: any) => {
         this.errorMessage = error.error?.detail || 'Failed to load chat history';

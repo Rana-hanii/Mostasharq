@@ -6,4 +6,6 @@ export type IHistory = Array<{
   started_at: string;
   ended_at: null;
   last_message_preview: null;
+  last_message_time?: string;
+  created_at?: string;
 }>;
