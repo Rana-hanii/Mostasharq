@@ -11,9 +11,10 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
       withHashLocation()
     ),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(),withInterceptors([loaderInterceptor])),
     provideToastr(), 
     provideAnimations(), 
   ],
