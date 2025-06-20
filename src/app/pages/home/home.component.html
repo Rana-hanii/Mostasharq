@@ -685,11 +685,11 @@
                     'justify-start': message.role === 'ai'
                 }">
                     <div *ngIf="message.role === 'user'" 
-                         class="p-4 rounded-2xl shadow-md max-w-[70%] bg-slate-950 text-white rounded-tr-none">
+                         class="p-4 rounded-2xl shadow-md max-w-[70%] bg-slate-950 text-white text-lg font-semibold rounded-tr-none">
                         <p>{{ message.content }}</p>
                     </div>
                      <div *ngIf="message.role === 'ai'" 
-                          class="p-4 rounded-2xl shadow-md max-w-[70%] bg-red-50 text-slate-950 rounded-bl-none"
+                          class="p-4 rounded-2xl shadow-md max-w-[70%] bg-red-50 text-slate-950 text-lg font-semibold rounded-bl-none"
                           [innerHTML]="message.content | markdownFormat">
                     </div>
                 </div>
