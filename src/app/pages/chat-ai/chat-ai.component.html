@@ -8,7 +8,7 @@
         <div class="btn text-center">
             <button (click)="startNewChat()"
                 [disabled]="isLoading"
-                class="btn bg-gray-900/10 border border-gray-200 px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:bg-red-800/30 hover:scale-105 transition-all duration-300 disabled:opacity-50"
+                class="btn bg-gray-900/10 border cursor-pointer border-gray-200 px-20 py-3 rounded-xl text-white shadow-2xl/100 font-medium hover:bg-red-800/30 hover:scale-105 transition-all duration-300 disabled:opacity-50"
                 type="button">
                 {{ isLoading ? 'Loading...' : 'New Chat' }}
             </button>
@@ -93,13 +93,13 @@
                 <div *ngFor="let msg of messages" class="message-container px-4 ">
                     <!-- User Message -->
                     <div *ngIf="msg.type === 'user'" class="flex justify-end mb-2">
-                        <div class="request rounded-tr-none bg-red-900/40  text-white p-6 rounded-2xl shadow-2xl/50 w-[35%] text-xl ">
+                        <div class="request rounded-tr-none bg-red-800/30 border border-red-900 text-white p-6 rounded-2xl shadow-2xl/50  max-w-[45%] text-xl">
                             {{ msg.content }}
                         </div>
                     </div>
                     <!-- AI Response -->
                     <div *ngIf="msg.type === 'model'" class="flex justify-start mb-2">
-                        <div class="response rounded-bl-none bg-white/10 border border-gray-50/10  text-white p-6 rounded-2xl shadow-3xl w-[45%] text-xl"
+                        <div class="response rounded-bl-none bg-white/10 border border-gray-50/10 text-white p-6 rounded-2xl shadow-2xl  max-w-[45%] text-xl"
                              [innerHTML]=" msg.content | markdownFormat">
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                             [(ngModel)]="message"
                             name="message"
                             [disabled]="!currentChatId || isLoading"
-                                class=" bg-transparent border border-gray-200  text-lg rounded-4xl block w-full ps-10 px-5 py-12 placeholder:text-gray-100  text-white placeholder:text-lg "
+                                class=" bg-transparent border border-gray-200  text-lg rounded-4xl block w-full ps-10 px-5 py-12 placeholder:text-gray-100  text-white placeholder:text-lg focus:border-gray-200 focus:ring-0 focus:outline-none "
                             placeholder="{{ currentChatId ? 'Ask me anything...' : 'Select a chat first' }}"
                             required />
                             <button type="submit"

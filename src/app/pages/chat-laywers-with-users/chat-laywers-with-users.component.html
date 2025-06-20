@@ -42,7 +42,7 @@
         </div>
         <div 
         class="contact absolute bottom-0 left-0 right-0  text-center">
-            <h3 routerLink="/ContactUs" routerLinkActive="bg-red-800"
+            <h3 routerLink="/lawyer/contact-us" routerLinkActive="bg-red-800"
              class="text-xl font-medium   bg-slate-950/20 text-white px-4 py-4 rounded-br-3xl  cursor-pointer hover:bg-red-800/30 hover:scale-110 hover:shadow-2xl/50 hover:-translate-y-1 hover:rounded-r-3xl transition-all duration-300  ">Contact-Us</h3>
         </div>
     </div>
@@ -68,18 +68,18 @@
         <!-- /Title/Header -->
         <div class="msg overflow-y-auto h-[75vh]">
           <div *ngFor="let msg of messages" class="message-container px-4 ">
-            <!-- User Message -->
-            <div *ngIf="msg.is_user" class="flex justify-end mb-2">
-              <div class="request rounded-tr-none bg-red-900/50 text-white p-6 rounded-2xl shadow-2xl/50 w-[35%] text-xl ">
-                {{ msg.content }}
+             <!-- User Message -->
+             <div *ngIf="msg.is_user" class="flex justify-end mb-2">
+              <div class="request rounded-tr-none bg-red-800/30 border border-red-900 text-white p-6 rounded-2xl shadow-2xl/50 max-w-[45%] text-xl ">
+                  {{ msg.content || msg.text || msg.message }}
               </div>
-            </div>
-            <!-- Lawyer Response -->
-            <div *ngIf="!msg.is_user" class="flex justify-start mb-2">
-              <div class="response rounded-bl-none bg-white/10 border border-gray-50/10 text-white p-6 rounded-2xl shadow-2xl w-[45%] text-xl">
-                {{ msg.content }}
+          </div>
+          <!-- Lawyer Response -->
+          <div *ngIf="!msg.is_user" class="flex justify-start mb-2">
+              <div class="response rounded-bl-none bg-white/10 border border-gray-50/10 text-white p-6 rounded-2xl shadow-2xl max-w-[45%] text-xl">
+                  {{ msg.content || msg.text || msg.message }}
               </div>
-            </div>
+          </div>
           </div>
           <!--! Typing indicator as Lawyer message, just above the input -->
           <div *ngIf="isTyping" class="flex justify-start mb-1">
@@ -98,7 +98,7 @@
                 [(ngModel)]="newMessage"
                 name="newMessage"
                 [disabled]="isLoadingChats || !currentChatId"
-                class="backdrop-blur-lg bg-gray-100/10 border border-gray-200 text-white text-sm rounded-3xl block w-full ps-10 p-5"
+                class="backdrop-blur-lg bg-gray-100/10 border border-gray-200 text-white text-sm rounded-3xl block w-full ps-10 p-5 focus:border-gray-200 focus:ring-0 focus:outline-none"
                 placeholder="{{ currentChatId ? 'Enter your message here...' : 'Please wait while session starts...' }}"
                 required />
               <button type="submit"

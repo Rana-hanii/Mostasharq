@@ -251,4 +251,13 @@ export class ChatWithLawyerComponent implements OnInit, AfterViewInit, OnDestroy
     this.selectedLawyer = null;
     this.messages = [];
   }
+  
+  getContactUsRoute(): string {
+    const userType = localStorage.getItem('user_type');
+    if (userType === 'company') {
+      return '/company/contact-us';
+    }
+    return '/client/contact-us';
+  }
+
 }
