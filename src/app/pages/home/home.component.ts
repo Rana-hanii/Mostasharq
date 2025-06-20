@@ -14,6 +14,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import ChatService from '../../core/services/chat/chat.service';
+import { MarkdownFormatPipe } from '../../pipes/markdown-format.pipe';
 import { FixflowbiteService } from '../../shared/Services/fixflowbite.service';
 
 
@@ -27,7 +28,7 @@ declare global {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, MarkdownFormatPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
